@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مشوار</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: white;
+        overflow-x: hidden;
+        background: url("WhatsApp Image 2025-01-29 at 10.22.59_44bf64be.jpg")
+          no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      /* طبقة شفافة فوق الخلفية */
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3); /* درجة شفافية مريحة للعين */
+      }
+
+      .container {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        max-width: 1200px;
+        padding: 30px;
+
+        border-radius: 15px;
+      }
+
+      .slogan {
+        font-size: 3.5rem;
+        margin-bottom: 30px;
+        font-style: italic;
+        color: #f1d4d9;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .button {
+        background-color: #ffffff;
+        color: #7b1b28;
+        padding: 25px;
+        width: 600px;
+        border: none;
+        border-radius: 15px;
+        font-size: 2.2rem;
+        text-align: center;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      .button:hover {
+        background-color: #f5e5e7;
+        color: #a0131f;
+        transform: scale(1.05);
+      }
+
+      @media screen and (max-width: 768px) {
+        .button {
+          font-size: 1.5rem;
+          padding: 30px;
+          width: 90%;
+        }
+
+        .slogan {
+          font-size: 2rem;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .button {
+          font-size: 1.3rem;
+          padding: 25px;
+          width: 85%; /* ترك هامش جانبي */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overlay"></div>
+    <!-- الطبقة السوداء الشفافة -->
+    <div class="container">
+      <p class="slogan">"حان الوقت لتطمئن ... مشوار"</p>
+      <div class="buttons">
+        <a href="about.html" class="button">نبذة عن شركتنا</a>
+        <a href="work.html" class="button">طريقة عملنا</a>
+        <a href="inquiries.html" class="button">الاستفسارات</a>
+        <a href="order.html" class="button">تتبع طلبي</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>صفحة الاستفسارات</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #800000; /* نبيتي */
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px; /* تكبير الفراغ بين المستطيلين */
+        width: 90%;
+        max-width: 600px; /* تكبير عرض المستطيلين */
+      }
+
+      .box {
+        background-color: #fff; /* أبيض */
+        color: #800000; /* نبيتي */
+        padding: 40px; /* تكبير حجم المستطيلين */
+        text-align: center;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        font-size: 1.5em;
+      }
+
+      .box:hover {
+        transform: scale(1.05);
+      }
+
+      @media (min-width: 600px) {
+        .container {
+          flex-direction: row;
+          justify-content: center;
+          gap: 40px; /* تكبير الفراغ بين المستطيلين في الشاشات الكبيرة */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div
+        class="box"
+        onclick="window.location.href='https://wa.me/905522552290'"
+      >
+        الاستفسار عن النقل العام
+      </div>
+      <div
+        class="box"
+        onclick="window.location.href='https://wa.me/905521855554'"
+      >
+        الاستفسار عن الكوزمتك
+      </div>
+    </div>
+  </body>
+</html>

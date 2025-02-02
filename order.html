@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تتبع الطلب</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #800000;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+      }
+
+      .header .logo {
+        height: 60px; /* تكبير اللوجو */
+      }
+
+      .header .company-name {
+        font-size: 2rem; /* تكبير اسم الشركة */
+        font-weight: bold;
+      }
+
+      .track-order {
+        max-width: 700px;
+        margin: 60px auto 20px; /* زيادة المسافة لأسفل */
+        padding: 30px;
+        background: #fff;
+        border-radius: 15px;
+        color: #333;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .track-order h2 {
+        color: #800000;
+        margin-bottom: 25px;
+        font-size: 1.8rem;
+      }
+
+      .track-order input {
+        width: 100%;
+        padding: 18px;
+        font-size: 1.3rem; /* تكبير الخط */
+        margin-bottom: 25px;
+        border: 2px solid #800000;
+        border-radius: 10px;
+        text-align: center;
+        background-color: #f8f8f8;
+      }
+
+      .track-order button {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.4rem;
+        background-color: #800000;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .track-order button:hover {
+        background-color: #a00000;
+      }
+
+      .loading-message {
+        margin-top: 20px;
+        font-size: 1.5rem;
+        color: #800000;
+        font-weight: bold;
+      }
+
+      .result-container {
+        display: none;
+        margin-top: 35px;
+        background: #fff;
+        color: #333;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .result-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+
+      .result-table th,
+      .result-table td {
+        padding: 14px;
+        border-bottom: 1px solid #ddd;
+        text-align: right;
+        font-size: 1.2rem;
+      }
+
+      .result-table th {
+        background-color: #800000;
+        color: white;
+        width: 40%;
+        text-align: right;
+      }
+
+      .download-btn {
+        margin-top: 20px;
+        width: 100%;
+        background-color: #007bff;
+        border: none;
+        padding: 15px;
+        color: #fff;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border-radius: 8px;
+      }
+
+      .download-btn:hover {
+        background-color: #0056b3;
+      }
+
+      /* تصميم متجاوب */
+      @media (max-width: 768px) {
+        .header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .header .logo {
+          margin-bottom: 10px;
+        }
+
+        .track-order {
+          width: 90%;
+          padding: 20px;
+        }
+
+        .result-table th,
+        .result-table td {
+          font-size: 1.1rem;
+          padding: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- العنوان واللوجو -->
+
+    <section id="track">
+      <div class="track-order">
+        <h2>تتبع الطلب</h2>
+        <input type="text" id="tracking-code" placeholder="أدخل كود الطلب" />
+        <button onclick="trackOrder()">تتبع</button>
+        <p id="message" class="loading-message"></p>
+
+        <div id="result-container" class="result-container">
+          <table class="result-table">
+            <tbody id="result-body"></tbody>
+          </table>
+          <button class="download-btn" onclick="downloadExcel()">
+            تحميل البيانات
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const webAppURL =
+        "https://script.google.com/macros/s/AKfycbzRWH7G8UFz7ayInx1G67uXpQahs5l5vQQ-LpFtZd0_Kc0CL-hNOFuag1FED4rJlKuc/exec";
+
+      async function trackOrder() {
+        const trackingCode = document
+          .getElementById("tracking-code")
+          .value.trim();
+        const messageElement = document.getElementById("message");
+        const resultContainer = document.getElementById("result-container");
+        const resultBody = document.getElementById("result-body");
+
+        messageElement.textContent = "";
+        resultContainer.style.display = "none";
+        resultBody.innerHTML = "";
+
+        if (!trackingCode) {
+          messageElement.textContent = "يرجى إدخال كود الطلب.";
+          return;
+        }
+
+        messageElement.textContent = "جاري البحث...";
+
+        try {
+          const response = await fetch(`${webAppURL}?code=${trackingCode}`);
+          if (!response.ok) throw new Error("خطأ في الاتصال بالخادم.");
+          const data = await response.json();
+
+          if (data.success) {
+            const details = [
+              ["كود الطلب", data.trackingCode],
+              ["حالة الطلب", data.status],
+              ["المستلم", data.recipient],
+              ["الكمية", data.quantity],
+              ["المبلغ", data.price],
+              ["المحافظة", data.governorate],
+              ["التليفون", data.phone],
+            ];
+            resultBody.innerHTML = details
+              .map(
+                ([label, value]) =>
+                  `<tr><th>${label}</th><td>${value}</td></tr>`
+              )
+              .join("");
+
+            resultContainer.style.display = "block";
+            messageElement.textContent = "";
+          } else {
+            messageElement.textContent = data.message;
+          }
+        } catch (error) {
+          messageElement.textContent = "حدث خطأ أثناء الاتصال بالخادم.";
+          console.error("Error:", error);
+        }
+      }
+
+      function downloadExcel() {
+        let table = document.querySelector(".result-table");
+        let rows = Array.from(table.rows);
+        let csvContent = rows
+          .map((row) =>
+            Array.from(row.cells)
+              .map((cell) => cell.innerText)
+              .join(",")
+          )
+          .join("\n");
+
+        let blob = new Blob([csvContent], { type: "text/csv" });
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "تتبع_الطلب.csv";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    </script>
+  </body>
+</html>
