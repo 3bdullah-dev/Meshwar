@@ -176,16 +176,16 @@
           <table class="result-table">
             <tbody id="result-body"></tbody>
           </table>
-<!--           <button class="download-btn" onclick="downloadData()">
+          <button class="download-btn" onclick="downloadData()">
             تحميل البيانات
-          </button> -->
+          </button>
         </div>
       </div>
     </section>
 
     <script>
       const webAppURL =
-        "https://script.google.com/macros/s/AKfycbyeF6OR1lK2Zu-5p7yORrfcVjrr7zyS9DOyaRxOASIBQD72UAhWt2C4mQ-HQ-s9gR67/exec";
+        "https://script.google.com/macros/s/AKfycbyV8MfgQSP8cPt-V4XarutWtTtOcKsZIYRnsHLiZNfYDIdxAsnqw2Ws36vq3VEb4YuG/exec";
 
       async function trackOrder() {
         const trackingCode = document
@@ -219,7 +219,7 @@
               ["المستلم", data.recipient],
               ["الكمية", data.quantity],
               ["اجور الشحن", data.price],
-              ["مبلغ الطلبية", data.payment],
+              ["تفاصيل الطلبية", data.payment],
               ["المحافظة", data.governorate],
               ["التليفون", data.phone],
             ];
@@ -241,21 +241,21 @@
         }
       }
 
-      // function downloadData() {
-      //   // نحصل على النص من العنصر الذي يحتوي على النتائج
-      //   var content = document.getElementById("result-container").innerText;
+      function downloadData() {
+        // نحصل على النص من العنصر الذي يحتوي على النتائج
+        var content = document.getElementById("result-container").innerText;
 
-      //   // إنشاء ملف Blob من النص
-      //   var blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+        // إنشاء ملف Blob من النص
+        var blob = new Blob([content], { type: "text/plain;charset=utf-8" });
 
-      //   // إنشاء رابط تحميل وتشغيل النقر عليه تلقائيًا
-      //   var link = document.createElement("a");
-      //   link.href = URL.createObjectURL(blob);
-      //   link.download = "طلب_التتبع.txt";
-      //   document.body.appendChild(link);
-      //   link.click();
-      //   document.body.removeChild(link);
-      // }
+        // إنشاء رابط تحميل وتشغيل النقر عليه تلقائيًا
+        var link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "طلب_التتبع.txt";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     </script>
   </body>
 </html>
