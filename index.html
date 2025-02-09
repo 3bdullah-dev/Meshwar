@@ -11,7 +11,7 @@
         font-family: Arial, sans-serif;
         color: white;
         overflow-x: hidden;
-        background: url("https://github.com/3bdullah-dev/Meshwar/blob/main/WhatsApp%20Image%202025-01-29%20at%2010.22.59_44bf64be.jpg?raw=true")
+        background: url("WhatsApp Image 2025-01-29 at 10.22.59_44bf64be.jpg")
           no-repeat center center fixed;
         background-size: cover;
         display: flex;
@@ -101,7 +101,7 @@
     <div class="overlay"></div>
     <!-- الطبقة السوداء الشفافة -->
     <div class="container">
-      <p class="slogan">"حان الوقت لتطمئن ... مشوار"</p>
+      <a href="admin.html" style="text-decoration: none;"><p class="slogan">"حان الوقت لتطمئن ... مشوار"</p></a>
       <div class="buttons">
         <a href="about.html" class="button">نبذة عن شركتنا</a>
         <a href="work.html" class="button">طريقة عملنا</a>
@@ -109,5 +109,52 @@
         <a href="order.html" class="button">تتبع طلبي</a>
       </div>
     </div>
+    <script>
+      let visitStartTime = Date.now();
+      let userCountry = "غير معروف";
+      const GOOGLE_SHEET_URL =
+        "https://script.google.com/macros/s/AKfycbzV3D7O_Q3UfhviLmt3UeLIVZsZ5z7KqL2laYwuX1_4RGoBaW0MlMMy40RJoIq3hGeF/exec";
+
+      // الحصول على موقع المستخدم
+      fetch("https://ipapi.co/json/")
+        .then((response) => response.json())
+        .then((data) => {
+          userCountry = data.country_name || "غير معروف";
+        })
+        .catch((error) => console.error("خطأ في جلب الموقع:", error));
+
+      // وظيفة تسجيل البيانات
+      function sendVisitData() {
+        const visitEndTime = Date.now();
+        const visitDuration = visitEndTime - visitStartTime;
+
+        const data = {
+          country: userCountry,
+          timestamp: new Date(visitEndTime).toISOString(),
+          timeSpent: visitDuration,
+        };
+
+        navigator.sendBeacon(GOOGLE_SHEET_URL, JSON.stringify(data));
+      }
+
+      // إعادة تعيين وقت البداية عند العودة إلى الصفحة
+      function resetVisitStartTime() {
+        visitStartTime = Date.now();
+      }
+
+      // تسجيل البيانات عند إغلاق الصفحة أو مغادرة التبويبة
+      window.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+          sendVisitData();
+        } else if (document.visibilityState === "visible") {
+          resetVisitStartTime();
+        }
+      });
+
+      window.addEventListener("pagehide", sendVisitData);
+
+      // إعادة تعيين وقت البداية عند التركيز على الصفحة
+      window.addEventListener("focus", resetVisitStartTime);
+    </script>
   </body>
 </html>
