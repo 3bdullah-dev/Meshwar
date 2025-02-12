@@ -114,7 +114,7 @@
         padding: 14px;
         border-bottom: 1px solid #ddd;
         text-align: right;
-        font-size: 2.5rem;
+        font-size: 1.6rem;
         font-weight: bold;
       }
 
@@ -180,7 +180,7 @@
       <div class="track-order">
         <h2>تتبع الطلب</h2>
         <input type="text" id="tracking-code" placeholder="أدخل كود الطلب" />
-        <button onclick="trackOrder()">تتبع</button>
+        <button id="tra" onclick="trackOrder()">تتبع</button>
         <p id="message" class="loading-message"></p>
 
         <div id="result-container" class="result-container">
@@ -192,7 +192,11 @@
           <table class="result-table">
             <tbody id="result-body"></tbody>
           </table>
-          <button class="download-btn" onclick="downloadTableAsImage()">
+          <button
+            class="download-btn"
+            id="dwn"
+            onclick="downloadTableAsImage()"
+          >
             تحميل البيانات
           </button>
         </div>
@@ -210,6 +214,8 @@
         const messageElement = document.getElementById("message");
         const resultContainer = document.getElementById("result-container");
         const resultBody = document.getElementById("result-body");
+        const dwn = document.getElementById("dwn");
+        const tra = document.getElementById("tra");
 
         messageElement.textContent = "";
         resultContainer.style.display = "none";
@@ -274,7 +280,7 @@
           const croppedCanvas = document.createElement("canvas");
           const ctx = croppedCanvas.getContext("2d");
 
-          const cropHeight = 1650; // الارتفاع المطلوب للصورة فقط
+          const cropHeight = 1230; // الارتفاع المطلوب للصورة فقط
 
           croppedCanvas.width = canvas.width; // الاحتفاظ بنفس العرض الأصلي
           croppedCanvas.height = cropHeight; // تحديد الطول الجديد
@@ -301,6 +307,17 @@
           document.body.removeChild(link);
         });
       }
+
+      document.body.addEventListener("keydown", function (event) {
+        if ((event.ctrlKey && event.key === "m") || event.key === "M") {
+          dwn.click();
+        }
+      });
+      document.body.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          tra.click();
+        }
+      });
     </script>
   </body>
 </html>
