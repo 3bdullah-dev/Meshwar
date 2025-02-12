@@ -308,6 +308,11 @@
         });
       }
 
+            window.onload = () => {
+        document.querySelector("input").focus();
+      };
+
+
       document.body.addEventListener("keydown", function (event) {
         if ((event.ctrlKey && event.key === "m") || event.key === "M") {
           dwn.click();
