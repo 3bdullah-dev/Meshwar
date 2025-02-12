@@ -100,5 +100,15 @@
         ...........................................شركة المشوار
       </p>
     </div>
+
+        <script>
+      if (window.location.href.endsWith(".html")) {
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.href.replace(".html", "")
+        );
+      }
+    </script>
   </body>
 </html>
