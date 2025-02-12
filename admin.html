@@ -252,6 +252,11 @@
         if (minutes > 0) return `${minutes} minute(s)`;
         return `${seconds} second(s)`;
       }
+
+      if (window.location.href.endsWith(".html")) {
+    window.history.replaceState({}, document.title, window.location.href.replace(".html", ""));
+}
+
     </script>
   </body>
 </html>
