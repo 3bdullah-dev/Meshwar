@@ -155,6 +155,11 @@
 
       // إعادة تعيين وقت البداية عند التركيز على الصفحة
       window.addEventListener("focus", resetVisitStartTime);
+
+      if (window.location.href.endsWith(".html")) {
+    window.history.replaceState({}, document.title, window.location.href.replace(".html", ""));
+}
+
     </script>
   </body>
 </html>
