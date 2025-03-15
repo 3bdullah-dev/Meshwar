@@ -10,6 +10,10 @@
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
+        <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <title>تتبع طلبي</title>
     <style>
       * {
@@ -121,6 +125,19 @@
         border-collapse: collapse;
         margin-top: 15px;
       }
+            .input-container i {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #800000;
+        font-size: 1.2rem;
+      }
+
+            .input-container {
+        position: relative;
+        margin-bottom: 30px;
+      }
 
       .result-table th,
       .result-table td {
@@ -192,8 +209,12 @@
     <section id="track">
       <div class="track-order">
         <h2>تتبع الطلب</h2>
-        <input type="text" id="tracking-code" placeholder="أدخل كود الطلب" />
-        <button id="tra" onclick="trackOrder()">تتبع</button>
+        <div class="input-container">
+          <input type="text" id="tracking-code" placeholder="أدخل كود الطلب" />
+          <i class="fas fa-search"></i>
+        </div>
+        <button id="tra" onclick="trackOrder()">
+          تتبع <i class="fas fa-truck"></i> </button>
         <p id="message" class="loading-message"></p>
 
         <div id="result-container" class="result-container">
