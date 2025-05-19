@@ -356,7 +356,7 @@
           font-size: 7pt !important;
           transform: scale(0.9) !important;
           transform-origin: top center !important;
-          overflow: hidden !important;
+          overflow: visible !important;
         }
         #homeBtn,
         .no-print,
@@ -376,20 +376,33 @@
           line-height: 1.1 !important;
           display: flex !important;
           align-items: center !important;
+          text-align: right !important;
+          direction: rtl !important;
         }
         .result-item strong {
-          min-width: 50px !important;
+          min-width: 45px !important;
           margin-left: 1mm !important;
+          text-align: right !important;
+          display: inline-block !important;
         }
         .result-item input {
           padding: 0.3mm !important;
           font-size: 6.5pt !important;
           height: 4mm !important;
           border: 0.2mm solid #ccc !important;
+          text-align: right !important;
+          direction: rtl !important;
+          flex: 1 !important;
+        }
+        .result-item span {
+          text-align: right !important;
+          direction: rtl !important;
+          flex: 1 !important;
         }
         .container-logo {
           margin: 0 !important;
           padding: 0 !important;
+          text-align: center !important;
         }
         .container-logo img {
           max-height: 12mm !important;
@@ -399,6 +412,7 @@
           font-size: 8pt !important;
           margin: 0 0 1mm 0 !important;
           padding: 0 !important;
+          text-align: center !important;
         }
         h2::after {
           display: none !important;
@@ -407,6 +421,13 @@
           margin-top: 1mm !important;
           padding: 1mm !important;
           border: 0.2mm solid #ccc !important;
+          text-align: right !important;
+          direction: rtl !important;
+        }
+        .result-item i {
+          margin-left: 1mm !important;
+          width: 8px !important;
+          text-align: center !important;
         }
       }
 
