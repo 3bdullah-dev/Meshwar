@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meshwar - Shipping System</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+    rel="website icon"
+    type="png"
+    href="https://github.com/3bdullah-dev/Meshwar/blob/main/11zon_cropped-removebg-preview.png?raw=true"
+  />
+    <style>
+      :root {
+        --primary-color: #2196f3;
+        --success-color: #4caf50;
+        --danger-color: #f44336;
+        --text-color: #333;
+        --bg-color: #f5f5f5;
+        --card-bg: #ffffff;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+        background: linear-gradient(120deg, #fff 0%, #f7f7fa 60%, #e0e0e0 100%);
+      }
+
+      .container {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+          0 1.5px 8px rgba(211, 47, 47, 0.07);
+        width: 100%;
+        max-width: 500px;
+        text-align: right;
+        position: relative;
+        z-index: 1;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .container-logo {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 18px;
+        margin-top: 6px;
+      }
+
+      .container-logo img {
+        max-width: 98%;
+        max-height: 120px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+        object-fit: contain;
+      }
+
+      h2 {
+        color: var(--text-color);
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 50%;
+        transform: translateX(50%);
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+      }
+
+      .input-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+
+      .input-group i {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 40px 12px 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      button i {
+        font-size: 1.1rem;
+      }
+
+      #searchBtn {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      #searchBtn:hover {
+        background-color: #1976d2;
+      }
+
+      #result {
+        margin-top: 1.5rem;
+        padding: 1.5rem;
+        border: 2px solid #e0e0e0;
+        border-radius: var(--border-radius);
+        display: none;
+      }
+
+      .result-item {
+        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .result-item i {
+        color: var(--primary-color);
+        width: 20px;
+      }
+
+      .result-item strong {
+        min-width: 120px;
+        color: var(--text-color);
+      }
+
+      .result-item span,
+      .result-item input {
+        flex: 1;
+      }
+
+      #submitBtn {
+        background-color: var(--success-color);
+        color: white;
+        margin-top: 1rem;
+      }
+
+      #submitBtn:hover {
+        background-color: #388e3c;
+      }
+
+      #printBtn {
+        background-color: #ff9800;
+        color: white;
+        margin-top: 1rem;
+      }
+
+      #printBtn:hover {
+        background-color: #f57c00;
+      }
+
+      #closeSheetBtn {
+        background-color: #9c27b0;
+        color: white;
+        margin-top: 0.5rem;
+      }
+
+      #closeSheetBtn:hover {
+        background-color: #7b1fa2;
+      }
+
+      #homeBtn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--danger-color);
+        color: white;
+        border: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      #homeBtn:hover {
+        transform: scale(1.1);
+        background-color: #d32f2f;
+      }
+
+      #homeBtn i {
+        font-size: 1.5rem;
+      }
+
+      .error {
+        color: var(--danger-color);
+        text-align: center;
+        margin-top: 1rem;
+        padding: 0.5rem;
+        border-radius: var(--border-radius);
+        background-color: rgba(244, 67, 54, 0.1);
+        display: none;
+      }
+
+      .error:not(:empty) {
+        display: block;
+      }
+
+      .error.success {
+        color: var(--success-color);
+        background-color: rgba(76, 175, 80, 0.1);
+        border: 1px solid rgba(76, 175, 80, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        padding: 1rem;
+      }
+
+      .error.success i {
+        font-size: 1.4rem;
+      }
+
+      .error.loading {
+        color: var(--primary-color);
+        background-color: rgba(33, 150, 243, 0.1);
+        border: 1px solid rgba(33, 150, 243, 0.2);
+      }
+
+      .loading {
+        display: inline-block;
+        animation: spin 1s linear infinite;
+        margin-right: 8px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .button-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+
+        .container {
+          padding: 1.5rem;
+        }
+
+        h2 {
+          font-size: 1.5rem;
+        }
+
+        .result-item {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 5px;
+        }
+
+        .result-item strong {
+          min-width: auto;
+        }
+      }
+
+      @media print {
+        body * {
+          visibility: hidden !important;
+        }
+        .container,
+        .container * {
+          visibility: visible !important;
+        }
+        .container {
+          position: static !important;
+          margin: 0 !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          width: 100% !important;
+          min-width: 0 !important;
+          max-width: 100% !important;
+          box-shadow: none !important;
+          border: none !important;
+          background: white !important;
+          padding: 0.05cm 0.2cm !important;
+        }
+        #homeBtn,
+        .no-print,
+        .error {
+          display: none !important;
+        }
+        @page {
+          margin: 0;
+        }
+      }
+
+      /* Page header */
+      .page-header {
+        width: 100vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 18px 36px 0 36px;
+        z-index: 10;
+        pointer-events: none;
+      }
+      .logo-box {
+        pointer-events: auto;
+      }
+      .logo-box img {
+        height: 54px;
+        width: auto;
+        opacity: 0.98;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+      }
+      .company-name {
+        font-size: 2.1rem;
+        font-weight: bold;
+        color: #d32f2f;
+        font-family: "Segoe UI", Arial, sans-serif;
+        letter-spacing: 1px;
+        pointer-events: auto;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+      }
+
+      /* Decorative SVG background for shipping theme */
+      .shipping-bg-svg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.18;
+      }
+      .shipping-bg-svg svg {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+      }
+      @media (max-width: 600px) {
+        .shipping-bg-svg {
+          opacity: 0.1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="logo-box">
+        <img src="11zon_cropped-removebg-preview.png" alt="Meshwar Logo" />
+      </div>
+      <div class="company-name">Meshwar</div>
+    </header>
+    <div class="container">
+      <div class="container-logo">
+        <img
+          src="WhatsApp Image 2025-02-09 at 17.14.41_f56a6468.jpg"
+          alt="Meshwar Logo"
+        />
+      </div>
+      <div class="input-group no-print">
+        <i class="fas fa-barcode"></i>
+        <input type="text" id="barcode" placeholder="أدخل الباركود" />
+      </div>
+      <button id="searchBtn" onclick="search()" class="no-print">
+        <div class="button-content">
+          <i class="fas fa-search"></i>
+          <span>بحث</span>
+        </div>
+      </button>
+      <div id="result">
+        <div class="result-item">
+          <i class="fas fa-barcode"></i>
+          <strong>الباركود:</strong>
+          <span id="displayBarcode"></span>
+        </div>
+        <div class="result-item">
+          <i class="fas fa-user"></i>
+          <strong>المرسل:</strong>
+          <span id="sender"></span>
+        </div>
+        <div class="result-item">
+          <i class="fas fa-money-bill"></i>
+          <strong>أجور الشحن:</strong>
+          <input type="text" id="shippingFees" />
+        </div>
+        <div class="result-item">
+          <i class="fas fa-hashtag"></i>
+          <strong>كود الطلب:</strong>
+          <input type="text" id="orderCode" />
+        </div>
+        <div class="result-item">
+          <i class="fas fa-truck"></i>
+          <strong>حالة الطلب:</strong>
+          <span id="shippingStatus"></span>
+        </div>
+        <div class="result-item">
+          <i class="fas fa-box"></i>
+          <strong>الكمية:</strong>
+          <input type="text" id="quantity" />
+        </div>
+        <div class="result-item">
+          <i class="fas fa-user-check"></i>
+          <strong>المستلم:</strong>
+          <span id="receiver"></span>
+        </div>
+        <div class="result-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <strong>المحافظة:</strong>
+          <span id="province"></span>
+        </div>
+        <div class="result-item">
+          <i class="fas fa-info-circle"></i>
+          <strong>تفاصيل الطلبية:</strong>
+          <input type="text" id="orderDetails" />
+        </div>
+        <div class="result-item">
+          <i class="fas fa-sticky-note"></i>
+          <strong>ملاحظة:</strong>
+          <input type="text" id="notes" />
+        </div>
+        <div class="result-item">
+          <i class="fas fa-phone"></i>
+          <strong>التليفون:</strong>
+          <span id="phone"></span>
+        </div>
+        <div class="button-group">
+          <button id="printBtn" onclick="printData()" class="no-print">
+            <div class="button-content">
+              <i class="fas fa-print"></i>
+              <span>طباعة البيانات</span>
+            </div>
+          </button>
+          <button id="submitBtn" onclick="submitData()" class="no-print">
+            <div class="button-content">
+              <i class="fas fa-paper-plane"></i>
+              <span>إرسال</span>
+            </div>
+          </button>
+          <button
+            id="closeSheetBtn"
+            onclick="submitData(true)"
+            class="no-print"
+          >
+            <div class="button-content">
+              <i class="fas fa-check-double"></i>
+              <span>إرسال وإغلاق الكشف</span>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div id="error" class="error"></div>
+    </div>
+    <button
+      id="homeBtn"
+      onclick="window.location.href='index.html'"
+      title="العودة للصفحة الرئيسية"
+    >
+      <i class="fas fa-home"></i>
+    </button>
+
+    <!-- Shipping themed SVG background -->
+    <div class="shipping-bg-svg">
+      <svg
+        viewBox="0 0 1920 1080"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+      >
+        <!-- Shipping routes -->
+        <path
+          d="M-100 300 Q800 500 2020 200"
+          stroke="#bdbdbd"
+          stroke-width="13"
+          fill="none"
+          stroke-linecap="round"
+        />
+        <path
+          d="M-100 700 Q1100 1200 2020 500"
+          stroke="#e0e0e0"
+          stroke-width="9"
+          fill="none"
+          stroke-linecap="round"
+        />
+        <path
+          d="M-100 1050 Q1500 1300 2020 900"
+          stroke="#e0e0e0"
+          stroke-width="5"
+          fill="none"
+          stroke-linecap="round"
+        />
+        <!-- Red accent circle -->
+        <circle cx="1800" cy="100" r="80" fill="#d32f2f" fill-opacity="0.13" />
+        <!-- Truck icon (center left, bigger) -->
+        <g opacity="0.18">
+          <rect
+            x="250"
+            y="500"
+            width="220"
+            height="90"
+            rx="22"
+            fill="#bdbdbd"
+          />
+          <rect
+            x="410"
+            y="540"
+            width="110"
+            height="50"
+            rx="12"
+            fill="#d32f2f"
+          />
+          <circle cx="280" cy="590" r="28" fill="#231f26" />
+          <circle cx="480" cy="590" r="28" fill="#231f26" />
+        </g>
+        <!-- Box icon (center right, bigger) -->
+        <g opacity="0.18">
+          <rect
+            x="1450"
+            y="400"
+            width="100"
+            height="100"
+            rx="18"
+            fill="#d32f2f"
+          />
+          <rect x="1475" y="425" width="50" height="50" rx="8" fill="#fff" />
+        </g>
+        <!-- Plane icon (top center, bigger) -->
+        <g opacity="0.18">
+          <polygon
+            points="900,120 1100,200 1000,170 1200,250 1180,270 980,180 950,250"
+            fill="#bdbdbd"
+          />
+        </g>
+        <!-- Ship icon (bottom center, bigger) -->
+        <g opacity="0.18">
+          <rect
+            x="800"
+            y="900"
+            width="320"
+            height="60"
+            rx="18"
+            fill="#bdbdbd"
+          />
+          <rect x="900" y="870" width="120" height="30" rx="8" fill="#d32f2f" />
+        </g>
+        <!-- Shield (safety) icon, top left -->
+        <g opacity="0.18">
+          <path
+            d="M200 120 Q260 200 320 120 Q320 240 260 300 Q200 240 200 120 Z"
+            fill="#bdbdbd"
+          />
+        </g>
+        <!-- Checkmark (safety) icon, top left -->
+        <g opacity="0.18">
+          <polyline
+            points="240,170 265,210 310,130"
+            fill="none"
+            stroke="#d32f2f"
+            stroke-width="18"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+      </svg>
+    </div>
+
+    <script>
+      const SEARCH_WEB_APP_URL =
+        "https://script.google.com/macros/s/AKfycbzea8d35EBbAuj7AN3QOfifGC4n1A5sts-e9oCJHt4OHfxk7kP2idpArrKrkobBndmX/exec";
+      const SUBMIT_WEB_APP_URL =
+        "https://script.google.com/macros/s/AKfycbwGf_3F1l72mI4Ub5z-0e4oJZ-iD_1UQE_sny6gMy2nOfwmmXAHksJ5IqRfR8fArWf0/exec";
+
+      function showError(message, type = "error") {
+        const errorDiv = document.getElementById("error");
+        if (!message) {
+          errorDiv.textContent = "";
+          errorDiv.className = "error";
+          return;
+        }
+
+        if (type === "success") {
+          errorDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+        } else {
+          errorDiv.textContent = message;
+        }
+
+        errorDiv.className = "error";
+
+        if (type === "success") {
+          errorDiv.classList.add("success");
+        } else if (type === "loading") {
+          errorDiv.classList.add("loading");
+        }
+
+        if (message.includes("خطأ") || message.includes("يرجى")) {
+          document.getElementById("result").style.display = "none";
+        }
+      }
+
+      function setLoading(buttonId, isLoading) {
+        const button = document.getElementById(buttonId);
+        const buttonContent = button.querySelector(".button-content");
+        const icon = buttonContent.querySelector("i");
+        const text = buttonContent.querySelector("span");
+
+        if (isLoading) {
+          icon.className = "fas fa-spinner loading";
+          button.disabled = true;
+        } else {
+          if (buttonId === "searchBtn") {
+            icon.className = "fas fa-search";
+          } else if (buttonId === "submitBtn") {
+            icon.className = "fas fa-paper-plane";
+          } else if (buttonId === "closeSheetBtn") {
+            icon.className = "fas fa-times-circle";
+          } else if (buttonId === "homeBtn") {
+            icon.className = "fas fa-home";
+          }
+          button.disabled = false;
+        }
+      }
+
+      function search() {
+        const barcode = document.getElementById("barcode").value.trim();
+        if (!barcode) {
+          showError("يرجى إدخال الباركود");
+          return;
+        }
+
+        document.getElementById("result").style.display = "none";
+        setLoading("searchBtn", true);
+
+        fetch(`${SEARCH_WEB_APP_URL}?barcode=${encodeURIComponent(barcode)}`)
+          .then((response) => response.json())
+          .then((data) => {
+            showError("");
+            if (data.error) {
+              showError(data.error);
+            } else {
+              document.getElementById("result").style.display = "block";
+              document.getElementById("displayBarcode").textContent = barcode;
+              document.getElementById("sender").textContent = data.sender;
+              document.getElementById("shippingFees").value =
+                data.shippingFees || "";
+              document.getElementById("orderCode").value = data.orderCode || "";
+              document.getElementById("shippingStatus").textContent =
+                data.shippingStatus;
+              document.getElementById("quantity").value = data.quantity || "";
+              document.getElementById("receiver").textContent = data.receiver;
+              document.getElementById("province").textContent = data.province;
+              document.getElementById("orderDetails").value =
+                data.orderDetails || "";
+              document.getElementById("notes").value = data.notes || "";
+              document.getElementById("phone").textContent = data.phone;
+            }
+          })
+          .catch((error) => {
+            showError("حدث خطأ أثناء الاتصال بالخادم: " + error.message);
+          })
+          .finally(() => {
+            setLoading("searchBtn", false);
+          });
+      }
+
+      function submitData(isLastCustomer) {
+        const barcode = document
+          .getElementById("displayBarcode")
+          .textContent.trim();
+        if (!barcode) {
+          showError("يرجى إدخال الباركود والبحث أولاً");
+          return;
+        }
+
+        const buttonId = isLastCustomer ? "closeSheetBtn" : "submitBtn";
+        setLoading(buttonId, true);
+
+        const data = {
+          action: "submit",
+          barcode: barcode,
+          sender: document.getElementById("sender").textContent,
+          shippingFees: document.getElementById("shippingFees").value,
+          orderCode: document.getElementById("orderCode").value,
+          shippingStatus: document.getElementById("shippingStatus").textContent,
+          quantity: document.getElementById("quantity").value,
+          receiver: document.getElementById("receiver").textContent,
+          province: document.getElementById("province").textContent,
+          orderDetails: document.getElementById("orderDetails").value,
+          notes: document.getElementById("notes").value,
+          phone: document.getElementById("phone").textContent,
+          isLastCustomer: isLastCustomer || false,
+        };
+
+        const params = new URLSearchParams(data).toString();
+        console.log("معاملات الإرسال:", params);
+
+        fetch(`${SUBMIT_WEB_APP_URL}?${params}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((result) => {
+            if (result.success) {
+              showError("تم الإرسال بنجاح!", "success");
+              document.getElementById("result").style.display = "none";
+              document.getElementById("barcode").value = "";
+              document.getElementById("displayBarcode").textContent = "";
+            } else {
+              showError(result.error || "حدث خطأ أثناء الإرسال");
+              console.log("تفاصيل الخطأ:", result.error);
+            }
+          })
+          .catch((error) => {
+            console.error("خطأ الشبكة أو التحليل:", error);
+            showError("حدث خطأ أثناء الإرسال: " + error.message);
+          })
+          .finally(() => {
+            setLoading(buttonId, false);
+          });
+      }
+
+      function printData() {
+        if (!document.getElementById("displayBarcode").textContent.trim()) {
+          showError("يرجى البحث عن الباركود أولاً");
+          return;
+        }
+        window.print();
+      }
+    </script>
+  </body>
+</html>
