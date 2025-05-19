@@ -3,163 +3,478 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="website icon" type="png" href="https://github.com/3bdullah-dev/Meshwar/blob/main/11zon_cropped-removebg-preview.png?raw=true" />
+    <link
+      rel="website icon"
+      type="png"
+      href="https://github.com/3bdullah-dev/Meshwar/blob/main/11zon_cropped-removebg-preview.png?raw=true"
+    />
     <title>Meshwar</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="main.css">
     <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        color: white;
-        overflow-x: hidden;
-        background: url("WhatsApp Image 2025-01-29 at 10.22.59_44bf64be.jpg")
-          no-repeat center center fixed;
-        background-size: cover;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+      @keyframes speed-line-move {
+        0% { left: 0vw; opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { left: 70vw; opacity: 0; }
       }
-
-      /* طبقة شفافة فوق الخلفية */
-      .overlay {
+      .speed-line {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.3); /* درجة شفافية مريحة للعين */
-      }
-
-      .container {
-        position: relative;
+        background: linear-gradient(90deg, #fff 80%, transparent);
+        border-radius: 3px;
+        opacity: 0;
+        pointer-events: none;
         z-index: 1;
-        text-align: center;
-        max-width: 1200px;
-        padding: 30px;
-
-        border-radius: 15px;
+        animation: speed-line-move 1.2s linear forwards;
       }
-
-      .slogan {
-        font-size: 3.5rem;
-        margin-bottom: 30px;
-        font-style: italic;
-        color: #f1d4d9;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      }
-
-      .buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        align-items: center;
-      }
-
-      .button {
-        background-color: #ffffff;
-        color: #7b1b28;
-        padding: 25px;
-        width: 600px;
-        border: none;
-        border-radius: 15px;
-        font-size: 2.2rem;
-        text-align: center;
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-      }
-
-      .button:hover {
-        background-color: #f5e5e7;
-        color: #a0131f;
-        transform: scale(1.05);
-      }
-
-      @media screen and (max-width: 768px) {
-        .button {
-          font-size: 1.5rem;
-          padding: 30px;
-          width: 90%;
-        }
-
-        .slogan {
-          font-size: 2rem;
-        }
-      }
-
-      @media screen and (max-width: 480px) {
-        .button {
-          font-size: 1.3rem;
-          padding: 25px;
-          width: 85%; /* ترك هامش جانبي */
-        }
-      }
+      .speed-line.line1 { top: 30px; height: 7px; width: 18vw; animation-delay: 0.05s; }
+      .speed-line.line2 { top: 60px; height: 5px; width: 14vw; animation-delay: 0.15s; opacity: 0.8; }
+      .speed-line.line3 { top: 90px; height: 3px; width: 10vw; animation-delay: 0.25s; opacity: 0.7; }
+      .speed-line.line4 { top: 80px; height: 2px; width: 8vw; animation-delay: 0.35s; opacity: 0.5; }
+      .speed-line.line5 { top: 40px; height: 4px; width: 12vw; animation-delay: 0.2s; opacity: 0.6; }
     </style>
   </head>
   <body>
-    <div class="overlay"></div>
-    <!-- الطبقة السوداء الشفافة -->
-    <div class="container">
-      <a href="admin.html" style="text-decoration: none;"><p class="slogan">"حان الوقت لتطمئن ... مشوار"</p></a>
-      <div class="buttons">
-        <a href="about.html" class="button">نبذة عن شركتنا</a>
-        <a href="work.html" class="button">طريقة عملنا</a>
-        <a href="inquiries.html" class="button">الاستفسارات</a>
-        <a href="order.html" class="button">تتبع طلبي</a>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-logo">
+        <img src="11zon_cropped-removebg-preview.png" alt="Meshwar Logo" />
       </div>
+      <div class="burger-menu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-links">
+        <li><a href="#home-section">الرئيسية</a></li>
+        <li><a href="#about-section">من نحن</a></li>
+        <li><a href="#services-section">خدماتنا</a></li>
+        <li><a href="#how-section">طريقة عملنا</a></li>
+        <li><a href="#contact-section">تواصل معنا</a></li>
+      </ul>
+      <div class="navbar-brand">Meshwar</div>
+    </nav>
+    <a href="#" class="scroll-top" title="العودة للأعلى">
+      <i class="fas fa-arrow-up"></i>
+    </a>
+    <section id="home-section"></section>
+    <section class="global-hero" id="home-section">
+      <div class="global-hero-bg">
+        <img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1920&q=80" alt="hero background" class="world-map-svg" />
+        <div class="hero-diagonal-overlay"></div>
+      </div>
+      <div class="hero-content-plain aos-init aos-animate hero-content-right" data-aos="fade-left">
+        <h1 class="hero-title">حان الوقت لتطمئن ... <span class="nowrap">مشوار</span></h1>
+        <p class="hero-desc">
+          خدمات شحن دولية موثوقة بين 
+          تركيا
+          <img src="https://flagcdn.com/w40/tr.png" alt="علم تركيا" style="height: 20px; vertical-align: middle; margin: 0 5px;">
+          والعراق.
+          <img src="https://flagcdn.com/w40/iq.png" alt="علم العراق" style="height: 20px; vertical-align: middle; margin: 0 5px;">
+        </p>
+        <div class="hero-features">
+          <span class="hero-highlight"><i class="fas fa-shield-alt"></i> أمان كامل</span>
+          <span class="hero-highlight"><i class="fas fa-bolt"></i> سرعة في التوصيل</span>
+          <span class="hero-highlight"><i class="fas fa-map-marker-alt"></i> تتبع مباشر</span>
+        </div>
+        <a href="#" class="hero-cta hero-cta-strong track-btn" onclick="goToOrderPage(event)">تتبع طلبي <i class="fas fa-location-arrow"></i></a>
+      </div>
+    </section>
+
+    <section class="section" id="about-section">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>من نحن</h2>
+          <p>شركة مشوار للشحن الدولي - شريككم الموثوق في النقل والشحن</p>
+        </div>
+        <div class="company-description" data-aos="fade-up" data-aos-delay="100">
+          <div class="about-content">
+            <div class="about-text">
+              <h3>رؤيتنا</h3>
+              <p>نسعى لأن نكون الشركة الرائدة في مجال الشحن الدولي بين تركيا والعراق، من خلال تقديم خدمات متميزة تلبي توقعات عملائنا وتتجاوزها.</p>
+              
+              <h3>رسالتنا</h3>
+              <p>نلتزم بتقديم خدمات شحن آمنة وسريعة وموثوقة، مع ضمان أعلى معايير الجودة والاحترافية في كل خطوة من رحلة شحنكم.</p>
+              
+              <h3>قيمنا</h3>
+              <ul class="values-list">
+                <li><i class="fas fa-check-circle"></i> <strong>الموثوقية:</strong> نلتزم بمواعيدنا ونحافظ على وعودنا</li>
+                <li><i class="fas fa-check-circle"></i> <strong>الجودة:</strong> نقدم خدمات عالية المستوى في كل التفاصيل</li>
+                <li><i class="fas fa-check-circle"></i> <strong>الشفافية:</strong> نتعامل بصدق ووضوح مع عملائنا</li>
+                <li><i class="fas fa-check-circle"></i> <strong>الابتكار:</strong> نسعى دائماً لتطوير خدماتنا وتحديثها</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section services-section" id="services-section">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>خدماتنا</h2>
+          <p>مجموعة متكاملة من خدمات الشحن والتوصيل لتلبية جميع احتياجاتكم</p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-icon"><i class="fas fa-box"></i></div>
+            <h3>شحن البضائع التجارية</h3>
+            <p>نقل جميع أنواع البضائع التجارية من كافة مواقع التسوق التركية  بأمان واحترافية .</p>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-icon"><i class="fas fa-truck-loading"></i></div>
+            <h3>نقل المعدات</h3>
+            <p>نقل المعدات الثقيلة والخفيفة مع ضمان الحماية والتسليم في الوقت المحدد.</p>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-icon"><i class="fas fa-couch"></i></div>
+            <h3>شحن الأثاث المنزلي</h3>
+            <p>شحن الأثاث المنزلي مع تغليف وحماية كاملة حتى باب المنزل.</p>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-icon"><i class="fas fa-suitcase"></i></div>
+            <h3>نقل الأمتعة الشخصية</h3>
+            <p>نقل الأمتعة الشخصية بسرية تامة وسرعة في التوصيل.</p>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-icon"><i class="fas fa-file-alt"></i></div>
+            <h3>شحن الوثائق الرسمية</h3>
+            <p>شحن الوثائق والأوراق الرسمية بسرعة وأمان تام.</p>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-delay="600">
+            <div class="service-icon"><i class="fas fa-spray-can"></i></div>
+            <h3>كوزمتك ومستحضرات التجميل والمنظفات</h3>
+            <p>نقل جميع أنواع مستحضرات التجميل والكوزمتك والمنظفات بمعايير صحية عالية وأمان تام.</p>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-delay="700">
+            <div class="service-icon"><i class="fas fa-paw"></i></div>
+            <h3>شحن الحيوانات</h3>
+            <p>شحن الحيوانات الأليفة مع رعاية خاصة طوال الرحلة.</p>
+          </div>
+          <div class="service-card" data-aos="fade-up" data-aos-delay="800">
+            <div class="service-icon"><i class="fas fa-users"></i></div>
+            <h3>نقل الأفراد والأشخاص</h3>
+            <p>خدمة نقل آمنة ومريحة للأفراد والأشخاص بين تركيا والعراق مع ضمان الراحة والسلامة.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section how-section" id="how-section">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>طريقة عملنا</h2>
+        </div>
+        <div class="how-content company-description" data-aos="fade-up" data-aos-delay="100">
+          <div class="welcome-message">
+            <i class="fas fa-handshake welcome-icon"></i>
+            <p><strong>مرحباً في شركة المشوار معكم<br>المهندس عمر مسؤول الكوزمتك</strong></p>
+          </div>
+          <div class="notice-box">
+            <i class="fas fa-info-circle notice-icon"></i>
+            <p>يرجى القراءة بعناية، هذا يمثل عقد عمل بيننا وبينكم. لأي سؤال أنا حاضر.</p>
+          </div>
+          <ul class="how-list">
+            <li><i class="fas fa-user-plus"></i> إذا كنت زبون جديد يجب أن تحصل على كود خاص من الشركة يُضاف إلى العنوان عند الطلب من الشركات.</li>
+            <li><i class="fab fa-whatsapp"></i> لمعرفة الأسعار والتفاصيل تواصل واتساب واكتب كلمة <span class="highlight">(اسعار الكوزمتك)</span>:
+              <a href="https://wa.me/905521855554" class="whatsapp-link" target="_blank" rel="noopener" title="تواصل واتساب">
+                <i class="fab fa-whatsapp"></i> 00905521855554
+              </a>
+            </li>
+            <li><i class="fas fa-search-location"></i> خدمة تتبع طلبي متوفرة: استلم الكود من الشركة وتابع حالة طلبك بسهولة من خلال صفحة التتبع في الموقع.</li>
+          </ul>
+          <div class="steps-container">
+            <h3 class="steps-title"><i class="fas fa-list-ol"></i> خطوات العمل</h3>
+            <ol class="how-steps">
+              <li><i class="fas fa-check-circle"></i> يرجى تتبع الطلبات معنا دائماً.</li>
+              <li><i class="fas fa-clock"></i> عند تأشير الطلبية "تم الاستلام" ولم ترسل صورة الطلب حتى الساعة 9 مساءً، تواصل معنا بنفس اليوم حتى نستفسر عنها في اليوم التالي حفاظاً على طلبك.</li>
+              <li><i class="fas fa-image"></i> عند إرسال صورة الطلب، أعد إرسال الصورة وليس إشارة فقط، واكتب "إرسال" أو "انتظار". (النقطة 7 تشرح خدمة الانتظار)</li>
+              <li><i class="fas fa-user-edit"></i> يرجى تزويدنا بـ:<br>اسم المستلم، هاتف، محافظة. بعدها نرسل لك باركود العنوان (بدل إرسال العنوان كامل كل مرة). كل زبون جديد يحصل على باركود خاص به.</li>
+              <li><i class="fas fa-barcode"></i> نرسل صورة الطلبية مع كود التتبع عبر الموقع بعد الوزن. تأكد من صحة الاسم والرقم والمكان. أنت مسؤول عن تدقيق المعلومات بعد إرسال الليبل.</li>
+              <li><i class="fas fa-dollar-sign"></i> المبلغ المكتوب على الطلبية هو فقط أجور الشحن الخارجي بالدولار.</li>
+              <li><i class="fas fa-coins"></i> أقل مبلغ لشحن الطلبية هو 3 دولار. يمكنك جمع عدة طلبات أو إرسالها منفردة.</li>
+              <li><i class="fas fa-hourglass-half"></i> خدمة الانتظار: إذا كان لديك أكثر من طلبية وتريد شحنها معاً، أعد صورة الطلب واكتب باركود العنوان وكلمة "انتظار". عند اكتمال الطلبيات أعد إرسال صور الطلبات مع كلمة "إرسال" ليتم شحنها معاً.</li>
+              <li><i class="fas fa-boxes"></i> خدمة دمج الطلبات متوفرة لتقليل تكاليف الشحن الداخلي.</li>
+              <li><i class="fas fa-shopping-cart"></i> خدمة توصية الشراء من تركيا متوفرة لأي منتج يخطر على بالك.</li>
+            </ol>
+          </div>
+          <div class="thanks">
+            <p>شاكرين تعاونكم معنا ... دمتم بخير</p>
+            <i class="fas fa-heart"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <section class="stats" id="services-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item" data-aos="fade-up">
+            <i class="fas fa-calendar-alt stat-icon"></i>
+            <div class="stat-number" id="yearsCounter">0</div>
+            <div class="stat-label">سنوات الخبرة</div>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+            <i class="fas fa-users stat-icon"></i>
+            <div class="stat-number" id="clientsCounter">0</div>
+            <div class="stat-label">عملاء سعداء</div>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-box-open stat-icon"></i>
+            <div class="stat-number" id="shipmentsCounter">0</div>
+            <div class="stat-label">شحنة ناجحة</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section team" id="track-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>فريق العمل</h2>
+          <p>نخبة من المحترفين يعملون على تقديم أفضل الخدمات</p>
+        </div>
+        <div class="team-grid">
+          <div class="team-member">
+            <img
+              src="https://res.cloudinary.com/dlcwlgs9i/image/upload/v1747576268/%D8%B3%D8%B4%D8%B3%D8%B3_lrzivc.jpg"
+              alt="عضو الفريق"
+            />
+            <h3>أبو الزهراء</h3>
+            <p>مدير الشركة</p>
+            <div class="social-links">
+              <!-- <a href=""><i class="fab fa-linkedin"></i></a> -->
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.facebook.com/profile.php?id=100042380885364&rdid=y8KsM3DoI2Q8sIs4&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CgpaHdf3o%2F#"><i class="fab fa-facebook"></i></a>
+            </div>
+          </div>
+          <div class="team-member">
+            <img
+              src="https://res.cloudinary.com/dlcwlgs9i/image/upload/v1747461555/WhatsApp_Image_2025-05-16_at_18.43.30_4f44e49d_n8ticl.jpg"
+              alt="عضو الفريق"
+            />
+            <h3>المهندس عمر الجماس</h3>
+            <p>مدير قسم الكوزمتك</p>
+            <div class="social-links">
+              <!-- <a href="#"><i class="fab fa-linkedin"></i></a> -->
+              <a href="https://www.instagram.com/omarengp/"><i class="fab fa-instagram"></i></i></a>
+              <a href="https://www.facebook.com/omar.enginer?rdid=yAK7wY7ciC6Kv44N&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Auuy6RNa6%2F#"><i class="fab fa-facebook"></i></a>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <section class="inquiries-section" id="contact-section">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>تواصل معنا</h2>
+          <p>نحن هنا للإجابة على جميع استفساراتكم</p>
+        </div>
+        <div class="inquiries-grid">
+          <div class="inquiry-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="inquiry-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <h3>اتصل بنا</h3>
+            <p>نحن متاحون على مدار الساعة للإجابة على استفساراتكم</p>
+            <div class="contact-info">
+              <div class="whatsapp-contact">
+                <span>للاستفسار عن الكوزمتك</span>
+                <a href="https://wa.me/905521855554" class="whatsapp-link" target="_blank" rel="noopener" title="تواصل واتساب">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+              </div>
+              <div class="whatsapp-contact">
+                <span>للاستفسار عن النقل العام</span>
+                <a href="https://wa.me/905522552290" class="whatsapp-link" target="_blank" rel="noopener" title="تواصل واتساب">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="inquiry-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="inquiry-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <h3>راسلنا</h3>
+            <p>يمكنكم إرسال استفساراتكم عبر البريد الإلكتروني</p>
+            <div class="contact-info">
+              <a href="mailto:almishwartoruism@gmail.com">
+                <i class="fas fa-envelope"></i>
+                almishwartoruism@gmail.com
+              </a>
+            </div>
+          </div>
+
+          <div class="inquiry-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="inquiry-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3>موقعنا</h3>
+            <p>يمكنكم زيارة مكتبنا في العاصمة التركية أنقرة</p>
+            <div class="contact-info">
+              <a href="https://www.google.com/maps?q=39.996964,32.863968&fbclid=PAZXh0bgNhZW0CMTEAAaeKucp6ffbpAlpf-ogymJTYsMRt1DcjUTgI7Qm9FqeFUl4oGhCGg-wKNBQ9VQ_aem_Sf4PWigYtTflAoMJrgza0A" target="_blank" rel="noopener">
+                <i class="fas fa-map-marker-alt"></i>
+                أنقرة، تركيا
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="main-footer">
+      <div class="footer-upper">
+        <div class="footer-col">
+          <h4>الموارد</h4>
+          <div class="footer-links">
+            <a href="#">المدونة</a>
+            <a href="#">الأحداث</a>
+            <a href="#">مركز المساعدة</a>
+            <a href="#">علاقات المستثمرين</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>الشركة</h4>
+          <div class="footer-links">
+            <a href="#about-section">من نحن</a>
+            <a href="#how-section">طريقة عملنا</a>
+            <a href="#contact-section">تواصل معنا</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>تواصل معنا</h4>
+          <div class="footer-links">
+            <a href="mailto:info@meshwar.com">البريد الإلكتروني</a>
+            <a href="#">الأسئلة الشائعة</a>
+          </div>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/ALMESHWARTOORZM?mibextid=wwXIfr&rdid=ztGL1BD2tL5i7Fqh&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1DiBdHFqd4%2F%3Fmibextid%3DwwXIfr#" title="فيسبوك" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/meshwar_cargo/profilecard/?igsh=bGxlenkzYWJqNHc1" title="انستجرام" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@al_abraz505?_t=ZS-8tbkd4zeYNT&_r=1" title="تيك توك" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-lower">
+        <span class="footer-company">
+          <img src="11zon_cropped-removebg-preview.png" alt="Meshwar Logo" class="footer-logo">
+          <a href="add.html" target="_blank" rel="noopener" style="color: #fff; text-decoration: none;">مشوار للشحن الدولي</a>
+        </span>
+      </div>
+      <div class="footer-promo">
+        <span class="promo-dev">
+            تطوير بواسطة <a href="https://abdallahahmed.pro" target="_blank" rel="noopener">Abdullah Ahmed</a>
+          <i class="fas fa-code"></i>
+        </span>
+      </div>
+      <div class="footer-policy">
+        <a href="#" style="color:#fff;text-decoration:underline; text-decoration: none ;">سياسة الخصوصية</a> |
+        <a href="#" style="color:#fff;text-decoration:underline; text-decoration: none ;">الشروط والأحكام</a>
+      </div>
+    </footer>
+
+   
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <!-- انيميشن الانتقال للشاحنة -->
+    <div id="truck-transition" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; align-items:center; justify-content:center;">
+      <div id="truck-overlay" style="position:absolute;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);opacity:0;transition:opacity 0.4s;"></div>
+      <div id="map-anim-container" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width: 520px; height: 320px; max-width:90vw; max-height:60vh;">
+        <svg id="map-svg" viewBox="0 0 520 320" width="100%" height="100%" style="border-radius:22px; box-shadow:0 4px 32px rgba(25,118,210,0.18); background:#e3eafc;">
+          <!-- تركيا (تظليل أصفر) -->
+          <path d="M40,260 Q120,120 300,80 Q400,100 480,160 Q500,200 400,220 Q300,200 200,180 Q100,200 40,260 Z" fill="#fff9c4" stroke="#ffd54f" stroke-width="4" opacity="0.7"/>
+          <!-- العراق (تظليل أخضر) -->
+          <path d="M320,180 Q370,140 470,200 Q480,250 420,280 Q350,270 320,180 Z" fill="#aed581" stroke="#388e3c" stroke-width="4" opacity="0.7"/>
+          <!-- حدود تركيا -->
+          <path d="M40,260 Q120,120 300,80 Q400,100 480,160 Q500,200 400,220 Q300,200 200,180 Q100,200 40,260 Z" fill="none" stroke="#fbc02d" stroke-width="3" stroke-dasharray="8,6"/>
+          <!-- حدود العراق -->
+          <path d="M320,180 Q370,140 470,200 Q480,250 420,280 Q350,270 320,180 Z" fill="none" stroke="#388e3c" stroke-width="3" stroke-dasharray="8,6"/>
+          <!-- طريق أبيض -->
+          <path d="M60,260 Q180,60 460,120" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.7"/>
+          <!-- مسار الحركة -->
+          <path id="move-path" d="M60,260 Q180,60 460,120" stroke="#1976d2" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="10,10"/>
+          <!-- نقاط على المسار -->
+          <circle cx="60" cy="260" r="7" fill="#1976d2"/>
+          <circle cx="460" cy="120" r="7" fill="#1976d2"/>
+          <!-- مدن رئيسية -->
+          <circle cx="120" cy="120" r="10" fill="#ffd700" stroke="#fff" stroke-width="3"/>
+          <text x="120" y="115" font-size="18" font-family="Arial" fill="#333" text-anchor="middle">اسطنبول</text>
+          <circle cx="470" cy="200" r="10" fill="#ffd700" stroke="#fff" stroke-width="3"/>
+          <text x="470" y="195" font-size="18" font-family="Arial" fill="#333" text-anchor="middle">بغداد</text>
+        </svg>
+        <div id="marker-icon" style="position:absolute; left:0; top:0; width:38px; height:38px; transform:translate(-19px,-34px);">
+          <i class="fas fa-map-marker-alt" style="font-size:38px; color:#d32f2f; filter: drop-shadow(0 0 10px #fff);"></i>
+        </div>
+      </div>
+      <div id="truck-text" style="position:absolute; bottom:12%; left:50%; transform:translateX(-50%); color:#fff; font-size:2.1rem; font-weight:600; opacity:0; transition:opacity 0.5s; text-shadow:0 2px 12px #000; letter-spacing:1px; background:rgba(25,118,210,0.15); padding:12px 32px; border-radius:18px; box-shadow:0 2px 12px rgba(25,118,210,0.12);">
+        جاري الانتقال لخريطة تتبع شحنتك...
+      </div>
+      <audio id="truck-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12b6b6e1b2.mp3" preload="auto"></audio>
     </div>
     <script>
-      let visitStartTime = Date.now();
-      let userCountry = "غير معروف";
-      const GOOGLE_SHEET_URL =
-        "https://script.google.com/macros/s/AKfycbzV3D7O_Q3UfhviLmt3UeLIVZsZ5z7KqL2laYwuX1_4RGoBaW0MlMMy40RJoIq3hGeF/exec";
-
-      // الحصول على موقع المستخدم
-      fetch("https://ipapi.co/json/")
-        .then((response) => response.json())
-        .then((data) => {
-          userCountry = data.country_name || "غير معروف";
-        })
-        .catch((error) => console.error("خطأ في جلب الموقع:", error));
-
-      // وظيفة تسجيل البيانات
-      function sendVisitData() {
-        const visitEndTime = Date.now();
-        const visitDuration = visitEndTime - visitStartTime;
-
-        const data = {
-          country: userCountry,
-          timestamp: new Date(visitEndTime).toISOString(),
-          timeSpent: visitDuration,
-        };
-
-        navigator.sendBeacon(GOOGLE_SHEET_URL, JSON.stringify(data));
-      }
-
-      // إعادة تعيين وقت البداية عند العودة إلى الصفحة
-      function resetVisitStartTime() {
-        visitStartTime = Date.now();
-      }
-
-      // تسجيل البيانات عند إغلاق الصفحة أو مغادرة التبويبة
-      window.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "hidden") {
-          sendVisitData();
-        } else if (document.visibilityState === "visible") {
-          resetVisitStartTime();
+    // حركة الأيقونة على المسار
+    function animateMarkerOnPath() {
+      const path = document.getElementById('move-path');
+      const marker = document.getElementById('marker-icon');
+      if (!path || !marker) return;
+      const pathLength = path.getTotalLength();
+      marker.style.opacity = 1;
+      let start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        let progress = Math.min((ts - start) / 1800, 1); // 1.8 ثانية
+        const point = path.getPointAtLength(progress * pathLength);
+        marker.style.left = point.x + 'px';
+        marker.style.top = point.y + 'px';
+        if (progress < 1) {
+          requestAnimationFrame(step);
         }
-      });
-
-      window.addEventListener("pagehide", sendVisitData);
-
-      // إعادة تعيين وقت البداية عند التركيز على الصفحة
-      window.addEventListener("focus", resetVisitStartTime);
-
-      if (window.location.href.endsWith(".html")) {
-    window.history.replaceState({}, document.title, window.location.href.replace(".html", ""));
-}
-
+      }
+      requestAnimationFrame(step);
+    }
+    // تعديل دالة goToOrderPage لتشغيل الأنيميشن الجديد
+    function goToOrderPage(e) {
+      if (e) e.preventDefault();
+      const anim = document.getElementById('truck-transition');
+      const overlay = document.getElementById('truck-overlay');
+      const text = document.getElementById('truck-text');
+      anim.style.display = 'flex';
+      overlay.style.opacity = '0';
+      text.style.opacity = '0';
+      setTimeout(() => {
+        overlay.style.opacity = '1';
+        // تشغيل صوت الشاحنة مع محاولة ذكية
+        const sound = document.getElementById('truck-sound');
+        if (sound) {
+          sound.currentTime = 0;
+          sound.muted = false;
+          sound.play().catch(() => {
+            const tryPlay = () => {
+              sound.play();
+              document.body.removeEventListener('click', tryPlay);
+            };
+            document.body.addEventListener('click', tryPlay);
+          });
+        }
+        // حركة الأيقونة
+        animateMarkerOnPath();
+        // إظهار النص مع Fade In
+        text.style.opacity = '1';
+        setTimeout(() => { text.style.opacity = '0'; }, 1700);
+      }, 10);
+      setTimeout(() => {
+        window.location.href = 'order.html';
+      }, 2000);
+    }
     </script>
   </body>
 </html>
