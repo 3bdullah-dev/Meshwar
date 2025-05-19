@@ -526,6 +526,38 @@
         opacity: 1;
         transform: translateY(0);
       }
+
+      /* إضافة الأنماط الجديدة للعنوان */
+      .tracking-title {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+      }
+
+      .tracking-title h2 {
+        color: #a0141c;
+        font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .tracking-title p {
+        color: #666;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 768px) {
+        .tracking-title h2 {
+          font-size: 1.8rem;
+        }
+        .tracking-title p {
+          font-size: 1rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -537,6 +569,10 @@
     </header>
 
     <div class="container">
+      <div class="tracking-title">
+        <h2>تتبع طلبك</h2>
+        <p>أدخل كود التتبع الخاص بك للحصول على تفاصيل شحنتك</p>
+      </div>
       <div class="input-group">
         <input type="text" id="tracking-code" placeholder="أدخل كود الطلب" />
         <i class="fas fa-search"></i>
