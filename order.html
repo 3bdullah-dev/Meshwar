@@ -250,21 +250,21 @@
           size: 100mm 100mm;
           margin: 0;
         }
-        html,
         body {
-          height: 100mm !important;
-          overflow: hidden !important;
+          display: block !important;
+          align-items: initial !important;
+          justify-content: initial !important;
           margin: 0 !important;
           padding: 0 !important;
         }
-        body > *:not(#result-container) {
-          display: none !important;
-        }
-        #result-container {
+        html,
+        body {
+          width: 100mm !important;
           height: 100mm !important;
-          max-height: 100mm !important;
-          min-height: 100mm !important;
-          overflow: hidden !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
         }
         body * {
           visibility: hidden;
