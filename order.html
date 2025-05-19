@@ -247,13 +247,13 @@
 
       @media print {
         @page {
-          size: A4 portrait;
+          size: 100mm 100mm;
           margin: 0;
         }
         html,
         body {
-          width: 100vw !important;
-          height: 100vh !important;
+          width: 100mm !important;
+          height: 100mm !important;
           margin: 0 !important;
           padding: 0 !important;
           -webkit-print-color-adjust: exact !important;
@@ -267,29 +267,30 @@
           visibility: visible !important;
         }
         #result-container {
-          width: 98vw !important;
-          max-width: 98vw !important;
+          width: 96mm !important;
+          max-width: 96mm !important;
           margin: 0 auto !important;
-          padding: 10px 10px !important;
+          padding: 2mm 1mm 1mm 1mm !important;
           box-shadow: none !important;
-          border: 2px solid #e0e0e0 !important;
+          border: 1px solid #e0e0e0 !important;
           background: white !important;
           display: block !important;
           height: auto !important;
           min-height: auto !important;
-          font-size: 1.1rem !important;
+          font-size: 1.18rem !important;
+          font-weight: bold !important;
         }
         .container-logo {
           width: 100% !important;
           text-align: center !important;
-          margin-bottom: 10px !important;
+          margin-bottom: 1.5mm !important;
           display: block !important;
         }
         .container-logo img {
-          max-width: 220px !important;
+          max-width: 22mm !important;
           width: 100% !important;
           height: auto !important;
-          margin: 0 auto 10px auto !important;
+          margin: 0 auto 1.5mm auto !important;
           display: block !important;
           filter: none !important;
         }
@@ -305,26 +306,27 @@
           width: 100% !important;
           border-collapse: collapse !important;
           margin-top: 0 !important;
-          font-size: 1.1rem !important;
+          font-size: 1.08rem !important;
           display: table !important;
           font-weight: bold !important;
         }
         .result-table th {
           background-color: #a0141c !important;
           color: white !important;
-          padding: 8px !important;
+          padding: 2mm 1mm !important;
           text-align: right !important;
           font-weight: bold !important;
           border: 1px solid #1976d2 !important;
           -webkit-print-color-adjust: exact !important;
           print-color-adjust: exact !important;
-          font-size: 1.1rem !important;
+          font-size: 1.08rem !important;
         }
         .result-table td {
-          padding: 8px !important;
+          padding: 2mm 1mm !important;
           border: 1px solid #e0e0e0 !important;
           text-align: right !important;
-          font-size: 1.1rem !important;
+          font-size: 1.08rem !important;
+          font-weight: bold !important;
         }
       }
 
