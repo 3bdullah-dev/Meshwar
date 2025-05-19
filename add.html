@@ -50,7 +50,7 @@
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
           0 1.5px 8px rgba(211, 47, 47, 0.07);
         width: 100%;
-        max-width: 500px;
+        max-width: 800px;
         text-align: right;
         position: relative;
         z-index: 1;
@@ -64,13 +64,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 18px;
-        margin-top: 6px;
+        margin-bottom: 2rem;
+        margin-top: 1rem;
       }
 
       .container-logo img {
-        max-width: 98%;
-        max-height: 120px;
+        max-width: 100%;
+        max-height: 150px;
         height: auto;
         border-radius: 10px;
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
@@ -80,8 +80,8 @@
       h2 {
         color: var(--text-color);
         text-align: center;
-        margin-bottom: 1.5rem;
-        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        font-size: 2rem;
         position: relative;
         padding-bottom: 0.5rem;
       }
@@ -163,10 +163,11 @@
       }
 
       .result-item {
-        margin: 1rem 0;
+        margin: 1.2rem 0;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 15px;
+        font-size: 1.1rem;
       }
 
       .result-item i {
@@ -175,13 +176,13 @@
       }
 
       .result-item strong {
-        min-width: 120px;
+        min-width: 150px;
         color: var(--text-color);
       }
 
-      .result-item span,
       .result-item input {
-        flex: 1;
+        padding: 12px;
+        font-size: 1.1rem;
       }
 
       #submitBtn {
@@ -351,8 +352,10 @@
           box-shadow: none !important;
           border: none !important;
           background: white !important;
-          padding: 5mm !important;
-          font-size: 10pt !important;
+          padding: 3mm !important;
+          font-size: 8pt !important;
+          transform: scale(0.95) !important;
+          transform-origin: top center !important;
         }
         #homeBtn,
         .no-print,
@@ -364,25 +367,34 @@
           margin: 0;
         }
         .result-item {
-          margin: 2mm 0 !important;
-          font-size: 9pt !important;
+          margin: 1mm 0 !important;
+          font-size: 7pt !important;
+          line-height: 1.2 !important;
         }
         .result-item strong {
-          min-width: 80px !important;
+          min-width: 60px !important;
         }
         .result-item input {
-          padding: 1mm !important;
-          font-size: 9pt !important;
+          padding: 0.5mm !important;
+          font-size: 7pt !important;
+          height: 5mm !important;
         }
         .container-logo img {
-          max-height: 20mm !important;
-          margin-bottom: 5mm !important;
+          max-height: 15mm !important;
+          margin-bottom: 2mm !important;
         }
         h2 {
-          font-size: 12pt !important;
-          margin-bottom: 5mm !important;
+          font-size: 10pt !important;
+          margin-bottom: 2mm !important;
+          padding-bottom: 1mm !important;
         }
         .button-group {
+          display: none !important;
+        }
+        .input-group {
+          display: none !important;
+        }
+        #searchBtn {
           display: none !important;
         }
       }
