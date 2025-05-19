@@ -344,13 +344,15 @@
           top: 0 !important;
           left: 0 !important;
           right: 0 !important;
-          width: 100% !important;
+          width: 100mm !important;
+          height: 100mm !important;
           min-width: 0 !important;
-          max-width: 100% !important;
+          max-width: 100mm !important;
           box-shadow: none !important;
           border: none !important;
           background: white !important;
-          padding: 0.05cm 0.2cm !important;
+          padding: 5mm !important;
+          font-size: 10pt !important;
         }
         #homeBtn,
         .no-print,
@@ -358,7 +360,30 @@
           display: none !important;
         }
         @page {
+          size: 100mm 100mm;
           margin: 0;
+        }
+        .result-item {
+          margin: 2mm 0 !important;
+          font-size: 9pt !important;
+        }
+        .result-item strong {
+          min-width: 80px !important;
+        }
+        .result-item input {
+          padding: 1mm !important;
+          font-size: 9pt !important;
+        }
+        .container-logo img {
+          max-height: 20mm !important;
+          margin-bottom: 5mm !important;
+        }
+        h2 {
+          font-size: 12pt !important;
+          margin-bottom: 5mm !important;
+        }
+        .button-group {
+          display: none !important;
         }
       }
 
