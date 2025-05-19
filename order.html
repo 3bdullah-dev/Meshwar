@@ -3,243 +3,697 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meshwar - تتبع الطلب</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <link
       rel="website icon"
       type="png"
       href="https://github.com/3bdullah-dev/Meshwar/blob/main/11zon_cropped-removebg-preview.png?raw=true"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-        <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <title>تتبع طلبي</title>
     <style>
+      :root {
+        --primary-color: #2196f3;
+        --success-color: #4caf50;
+        --danger-color: #f44336;
+        --text-color: #333;
+        --bg-color: #f5f5f5;
+        --card-bg: #ffffff;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
       * {
+        box-sizing: border-box;
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
       }
 
       body {
-        font-family: Arial, sans-serif;
-        background-color: #800000;
-        color: #fff;
-        text-align: center;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+        background: linear-gradient(120deg, #fff 0%, #f7f7fa 60%, #e0e0e0 100%);
       }
 
-      .header {
+      .page-header {
+        width: 100vw;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 30px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 18px 36px 0 36px;
+        z-index: 10;
+        pointer-events: none;
       }
 
-      .header .logo {
-        height: 60px; /* تكبير اللوجو */
+      .logo-box {
+        pointer-events: auto;
       }
 
-      .header .company-name {
-        font-size: 2rem; /* تكبير اسم الشركة */
+      .logo-box img {
+        height: 54px;
+        width: auto;
+        opacity: 0.98;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+      }
+
+      .company-name {
+        font-size: 2.1rem;
         font-weight: bold;
+        color: #d32f2f;
+        font-family: "Segoe UI", Arial, sans-serif;
+        letter-spacing: 1px;
+        pointer-events: auto;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
       }
 
-      .track-order {
+      .container {
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+          0 1.5px 8px rgba(211, 47, 47, 0.07);
+        width: 100%;
         max-width: 700px;
-        margin: 60px auto 20px; /* زيادة المسافة لأسفل */
-        padding: 30px;
-        background: #fff;
-        border-radius: 15px;
-        color: #333;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        text-align: right;
+        position: relative;
+        z-index: 1;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-top: 80px;
       }
 
-      .track-order h2 {
-        color: #800000;
-        margin-bottom: 25px;
-        font-size: 1.8rem;
-      }
-
-      .track-order input {
+      .container-logo {
         width: 100%;
-        padding: 18px;
-        font-size: 1.5rem; /* تكبير الخط */
-        margin-bottom: 25px;
-        border: 2px solid #800000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 18px;
+        margin-top: 6px;
+      }
+
+      .container-logo img {
+        max-width: 450px;
+        width: 100%;
+        height: auto;
         border-radius: 10px;
-        text-align: center;
-        background-color: #f8f8f8;
-        font-weight: bold;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+        object-fit: contain;
+        margin-bottom: 10px;
       }
 
-      .track-order button {
+      .input-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+
+      .input-group i {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      input {
         width: 100%;
-        padding: 15px;
-        font-size: 1.4rem;
-        background-color: #800000;
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.3s;
+        padding: 12px 40px 12px 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: all 0.3s ease;
       }
 
-      .track-order button:hover {
-        background-color: #a00000;
+      input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      button i {
+        font-size: 1.1rem;
+      }
+
+      #tra {
+        background-color: #a0141c;
+        color: #fff;
+      }
+
+      #tra:hover {
+        background-color: #7d1017;
+      }
+
+      .loader {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        border: 3px solid #fff;
+        border-radius: 50%;
+        border-top: 3px solid #a0141c;
+        animation: spin 0.8s linear infinite;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
 
       .loading-message {
-        margin-top: 20px;
-        font-size: 1.5rem;
-        color: #800000;
-        font-weight: bold;
+        margin-top: 1rem;
+        color: var(--text-color);
+        text-align: center;
+        font-weight: 500;
       }
 
       .result-container {
+        margin-top: 1.5rem;
+        padding: 1.5rem;
+        border: 2px solid #e0e0e0;
+        border-radius: var(--border-radius);
         display: none;
-        margin-top: 35px;
-        background: #fff;
-        color: #333;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-/*         animation: fadeIn 0.5s ease-in; */
-      }
-
-
-/*             @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
- */
-      .result-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-      }
-            .input-container i {
-        position: absolute;
-        right: 20px;
-       top: 50%;
-      transform: translateY(-75%);
-        color: #800000;
-        font-size: 1.2rem;
-      }
-
-            .input-container {
-        position: relative;
-        margin-bottom: 30px;
-      }
-
-      .result-table th,
-      .result-table td {
-        padding: 14px;
-        border-bottom: 1px solid #ddd;
-        text-align: right;
-        font-size: 1.6rem;
-        font-weight: bold;
+        background-color: #fff !important;
       }
 
       .result-logo {
         display: block;
-        margin: 0 auto 15px auto;
-        max-width: 350px;
+        margin: 0 auto 1.5rem;
+        max-width: 200px;
+        border-radius: var(--border-radius);
       }
-      .result-table th {
-        background-color: #800000;
-        color: white;
-        width: 40%;
+
+      .result-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+      }
+
+      .result-table th,
+      .result-table td {
+        padding: 12px;
+        border-bottom: 1px solid #e0e0e0;
         text-align: right;
       }
 
+      .result-table th {
+        background-color: #a0141c;
+        color: white;
+        font-weight: 600;
+      }
+
       .download-btn {
-        margin-top: 20px;
-        width: 100%;
-        background-color: #007bff;
-        border: none;
-        padding: 15px;
-        color: #fff;
-        font-size: 1.2rem;
-        cursor: pointer;
-        border-radius: 8px;
+        background-color: var(--success-color);
+        color: white;
+        margin-top: 1rem;
       }
 
       .download-btn:hover {
-        background-color: #0056b3;
+        background-color: #388e3c;
       }
 
-      /* تصميم متجاوب */
+      @media print {
+        @page {
+          size: A4 portrait;
+          margin: 0;
+        }
+        html,
+        body {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        body * {
+          visibility: hidden;
+        }
+        #result-container,
+        #result-container * {
+          visibility: visible !important;
+        }
+        #result-container {
+          width: 85% !important;
+          max-width: 900px !important;
+          margin: 40px auto !important;
+          padding: 30px 20px !important;
+          box-shadow: none !important;
+          border: 2px solid #e0e0e0 !important;
+          background: white !important;
+          display: block !important;
+          height: auto !important;
+          min-height: auto !important;
+        }
+        .container-logo {
+          width: 100% !important;
+          text-align: center !important;
+          margin-bottom: 20px !important;
+          display: block !important;
+        }
+        .container-logo img {
+          max-width: 500px !important;
+          width: 100% !important;
+          height: auto !important;
+          margin: 0 auto 20px auto !important;
+          display: block !important;
+          filter: none !important;
+        }
+        .input-group,
+        #tra,
+        #homeBtn,
+        .page-header,
+        .shipping-bg-svg,
+        .download-btn {
+          display: none !important;
+        }
+        .result-table {
+          width: 100% !important;
+          border-collapse: collapse !important;
+          margin-top: 0 !important;
+          font-size: 22px !important;
+          display: table !important;
+        }
+        .result-table th {
+          background-color: #a0141c !important;
+          color: white !important;
+          padding: 18px !important;
+          text-align: right !important;
+          font-weight: bold !important;
+          border: 1px solid #1976d2 !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .result-table td {
+          padding: 18px !important;
+          border: 1px solid #e0e0e0 !important;
+          text-align: right !important;
+          font-size: 16px !important;
+        }
+      }
+
+      #homeBtn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--danger-color);
+        color: white;
+        border: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      #homeBtn:hover {
+        transform: scale(1.1);
+        background-color: #d32f2f;
+      }
+
+      #homeBtn i {
+        font-size: 1.5rem;
+      }
+
+      .shipping-bg-svg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.18;
+      }
+
+      .shipping-bg-svg svg {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+      }
+
+      @media (max-width: 600px) {
+        .shipping-bg-svg {
+          opacity: 0.1;
+        }
+      }
+
       @media (max-width: 768px) {
-        .header {
-          flex-direction: column;
-          text-align: center;
+        .page-header {
+          padding: 12px 24px 0 24px;
         }
 
-        .header .logo {
-          margin-bottom: 10px;
+        .logo-box img {
+          height: 40px;
         }
 
-        .track-order {
-          width: 90%;
-          padding: 20px;
+        .company-name {
+          font-size: 1.8rem;
+        }
+
+        .container {
+          margin-top: 70px;
+          padding: 1.5rem;
         }
 
         .result-table th,
         .result-table td {
-          font-size: 1.1rem;
-          padding: 12px;
+          font-size: 0.9rem;
+          padding: 8px;
         }
+
         .result-logo {
-          max-width: 200px;
+          max-width: 150px;
         }
+
+        #homeBtn {
+          width: 45px;
+          height: 45px;
+          bottom: 15px;
+          left: 15px;
+        }
+
+        #homeBtn i {
+          font-size: 1.3rem;
+        }
+      }
+
+      #downloadImgBtn {
+        margin-top: 10px;
+        background-color: #a0141c;
+        color: #fff;
+      }
+      #downloadImgBtn:hover {
+        background-color: #7d1017;
+      }
+
+      /* Animation Styles */
+      .animation-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+      }
+
+      .animation-container.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .truck-animation {
+        font-size: 150px;
+        color: #a0141c;
+        position: relative;
+        transform: translateX(-100vw) scale(0.5);
+        transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        filter: drop-shadow(0 0 20px rgba(160, 20, 28, 0.3));
+      }
+
+      .truck-animation i {
+        transform: scaleX(-1);
+      }
+
+      .truck-animation.active {
+        transform: translateX(0) scale(1);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: translateX(0) scale(1);
+          filter: drop-shadow(0 0 20px rgba(160, 20, 28, 0.3));
+        }
+        50% {
+          transform: translateX(0) scale(1.05);
+          filter: drop-shadow(0 0 30px rgba(160, 20, 28, 0.5));
+        }
+        100% {
+          transform: translateX(0) scale(1);
+          filter: drop-shadow(0 0 20px rgba(160, 20, 28, 0.3));
+        }
+      }
+
+      .speed-lines {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+      }
+
+      .speed-line {
+        position: absolute;
+        width: 3px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.6);
+        animation: speedLine 0.8s linear infinite;
+        filter: blur(1px);
+      }
+
+      @keyframes speedLine {
+        0% {
+          transform: translateX(0) scaleY(1);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(-150px) scaleY(0.5);
+          opacity: 0;
+        }
+      }
+
+      .loading-text {
+        color: white;
+        font-size: 2rem;
+        margin-top: 30px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        font-weight: 500;
+      }
+
+      .loading-text.active {
+        opacity: 1;
+        transform: translateY(0);
       }
     </style>
   </head>
   <body>
-    <!-- العنوان واللوجو -->
-
-    <section id="track">
-      <div class="track-order">
-        <h2>تتبع الطلب</h2>
-        <div class="input-container">
-          <input type="text" id="tracking-code" placeholder="أدخل كود الطلب" />
-          <i class="fas fa-search"></i>
-        </div>
-        <button id="tra" onclick="trackOrder()">
-          تتبع <i class="fas fa-truck"></i> </button>
-        <p id="message" class="loading-message"></p>
-
-        <div id="result-container" class="result-container">
-          <img
-            id="result-logo"
-            class="result-logo"
-            src="https://res.cloudinary.com/dhein1wuf/image/upload/v1739118101/Meshwar_lhk01v.jpg"
-          />
-          <table class="result-table">
-            <tbody id="result-body"></tbody>
-          </table>
-          <button
-            class="download-btn"
-            id="dwn"
-            onclick="downloadTableAsImage()"
-          >
-            تحميل البيانات
-          </button>
-        </div>
+    <header class="page-header">
+      <div class="logo-box">
+        <img src="11zon_cropped-removebg-preview.png" alt="Meshwar Logo" />
       </div>
-    </section>
+      <div class="company-name">Meshwar</div>
+    </header>
+
+    <div class="container">
+      <div class="input-group">
+        <input type="text" id="tracking-code" placeholder="أدخل كود الطلب" />
+        <i class="fas fa-search"></i>
+      </div>
+      <button id="tra" onclick="trackOrder()">
+        تتبع <i class="fas fa-truck-moving"></i>
+      </button>
+      <p id="message" class="loading-message"></p>
+
+      <div id="result-container" class="result-container">
+        <div class="container-logo">
+          <img
+            src="https://res.cloudinary.com/dhein1wuf/image/upload/v1739118101/Meshwar_lhk01v.jpg"
+            alt="Meshwar Logo"
+          />
+        </div>
+        <table class="result-table">
+          <tbody id="result-body"></tbody>
+        </table>
+        <button class="download-btn" id="dwn" onclick="printOrderDetails()">
+          طباعة البيانات <i class="fas fa-print"></i>
+        </button>
+        <button
+          class="download-btn"
+          id="downloadImgBtn"
+          onclick="downloadContainerAsImage()"
+        >
+          تحميل البيانات كصورة <i class="fas fa-image"></i>
+        </button>
+      </div>
+    </div>
+
+    <button
+      id="homeBtn"
+      onclick="window.location.href='index.html'"
+      title="العودة للصفحة الرئيسية"
+    >
+      <i class="fas fa-home"></i>
+    </button>
+
+    <!-- Animation Container -->
+    <div class="animation-container">
+      <div class="truck-animation">
+        <i class="fas fa-truck-moving"></i>
+        <div class="speed-lines"></div>
+      </div>
+      <div class="loading-text">جاري التحميل...</div>
+    </div>
+
+    <!-- Shipping themed SVG background -->
+    <div class="shipping-bg-svg">
+      <svg
+        viewBox="0 0 1920 1080"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+      >
+        <!-- Shipping routes -->
+        <path
+          d="M-100 300 Q800 500 2020 200"
+          stroke="#bdbdbd"
+          stroke-width="13"
+          fill="none"
+          stroke-linecap="round"
+        />
+        <path
+          d="M-100 700 Q1100 1200 2020 500"
+          stroke="#e0e0e0"
+          stroke-width="9"
+          fill="none"
+          stroke-linecap="round"
+        />
+        <path
+          d="M-100 1050 Q1500 1300 2020 900"
+          stroke="#e0e0e0"
+          stroke-width="5"
+          fill="none"
+          stroke-linecap="round"
+        />
+        <!-- Red accent circle -->
+        <circle cx="1800" cy="100" r="80" fill="#d32f2f" fill-opacity="0.13" />
+        <!-- Truck icon (center left, bigger) -->
+        <g opacity="0.18">
+          <rect
+            x="250"
+            y="500"
+            width="220"
+            height="90"
+            rx="22"
+            fill="#bdbdbd"
+          />
+          <rect
+            x="410"
+            y="540"
+            width="110"
+            height="50"
+            rx="12"
+            fill="#d32f2f"
+          />
+          <circle cx="280" cy="590" r="28" fill="#231f26" />
+          <circle cx="480" cy="590" r="28" fill="#231f26" />
+        </g>
+        <!-- Box icon (center right, bigger) -->
+        <g opacity="0.18">
+          <rect
+            x="1450"
+            y="400"
+            width="100"
+            height="100"
+            rx="18"
+            fill="#d32f2f"
+          />
+          <rect x="1475" y="425" width="50" height="50" rx="8" fill="#fff" />
+        </g>
+        <!-- Plane icon (top center, bigger) -->
+        <g opacity="0.18">
+          <polygon
+            points="900,120 1100,200 1000,170 1200,250 1180,270 980,180 950,250"
+            fill="#bdbdbd"
+          />
+        </g>
+        <!-- Ship icon (bottom center, bigger) -->
+        <g opacity="0.18">
+          <rect
+            x="800"
+            y="900"
+            width="320"
+            height="60"
+            rx="18"
+            fill="#bdbdbd"
+          />
+          <rect x="900" y="870" width="120" height="30" rx="8" fill="#d32f2f" />
+        </g>
+        <!-- Shield (safety) icon, top left -->
+        <g opacity="0.18">
+          <path
+            d="M200 120 Q260 200 320 120 Q320 240 260 300 Q200 240 200 120 Z"
+            fill="#bdbdbd"
+          />
+        </g>
+        <!-- Checkmark (safety) icon, top left -->
+        <g opacity="0.18">
+          <polyline
+            points="240,170 265,210 310,130"
+            fill="none"
+            stroke="#d32f2f"
+            stroke-width="18"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+      </svg>
+    </div>
 
     <script>
       const webAppURL =
-        "https://script.google.com/macros/s/AKfycbyV8MfgQSP8cPt-V4XarutWtTtOcKsZIYRnsHLiZNfYDIdxAsnqw2Ws36vq3VEb4YuG/exec";
+        "https://script.google.com/macros/s/AKfycbxNVhOZjvHJTuZIn6QC9va0zpYEUZFVnHf8OMUXT3yLKFlmjlyPb4PfPJTZVMjlL-zy/exec";
 
       async function trackOrder() {
         const trackingCode = document
@@ -260,7 +714,9 @@
           return;
         }
 
-        messageElement.textContent = "جاري البحث...";
+        // إظهار جملة جاري البحث مع اللودر في الرسالة فقط
+        messageElement.innerHTML = '<span class="loader"></span> جاري البحث...';
+        tra.disabled = true;
 
         try {
           const response = await fetch(`${webAppURL}?code=${trackingCode}`);
@@ -270,6 +726,7 @@
           if (data.success) {
             const details = [
               ["كود الطلب", data.trackingCode],
+              ["الباركود", data.barcode],
               ["حالة الطلب", data.status],
               ["المرسل", data.sender],
               ["المستلم", data.recipient],
@@ -294,45 +751,47 @@
         } catch (error) {
           messageElement.textContent = "حدث خطأ أثناء الاتصال بالخادم.";
           console.error("Error:", error);
+        } finally {
+          tra.disabled = false;
         }
       }
 
-      function downloadTableAsImage() {
-        // الحصول على العنصر الذي يحتوي على الجدول
-        const table = document.getElementById("result-container");
+      function printOrderDetails() {
+        window.print();
+      }
 
-        if (!table) {
-          alert("الجدول غير موجود");
-          return;
-        }
+      function downloadContainerAsImage() {
+        const container = document.getElementById("result-container");
+        const printBtn = document.getElementById("dwn");
+        const imgBtn = document.getElementById("downloadImgBtn");
 
-        html2canvas(document.getElementById("result-container"), {
+        // حفظ القيم الأصلية
+        const originalWidth = container.style.width;
+        const originalMaxWidth = container.style.maxWidth;
+
+        // تعيين عرض ثابت مؤقتًا
+        container.style.width = "900px";
+        container.style.maxWidth = "900px";
+
+        // إخفاء الزرين مؤقتًا
+        printBtn.style.display = "none";
+        imgBtn.style.display = "none";
+
+        html2canvas(container, {
           useCORS: true,
-          backgroundColor: null,
+          backgroundColor: "#fff",
           scale: 2,
+          width: 900,
+          windowWidth: 900,
+          windowHeight: container.scrollHeight,
         }).then((canvas) => {
-          const croppedCanvas = document.createElement("canvas");
-          const ctx = croppedCanvas.getContext("2d");
+          // إعادة القيم الأصلية
+          container.style.width = originalWidth;
+          container.style.maxWidth = originalMaxWidth;
+          printBtn.style.display = "";
+          imgBtn.style.display = "";
 
-          const cropHeight = 1375; // الارتفاع المطلوب للصورة فقط
-
-          croppedCanvas.width = canvas.width; // الاحتفاظ بنفس العرض الأصلي
-          croppedCanvas.height = cropHeight; // تحديد الطول الجديد
-
-          ctx.drawImage(
-            canvas,
-            0,
-            0,
-            canvas.width,
-            cropHeight,
-            0,
-            0,
-            canvas.width,
-            cropHeight
-          );
-
-          // تحميل الصورة
-          const imageData = croppedCanvas.toDataURL("image/png");
+          const imageData = canvas.toDataURL("image/png");
           const link = document.createElement("a");
           link.href = imageData;
           link.download = "order.png";
@@ -342,13 +801,16 @@
         });
       }
 
-            window.onload = () => {
+      window.onload = () => {
         document.querySelector("input").focus();
       };
 
-
       document.body.addEventListener("keydown", function (event) {
-        if ((event.ctrlKey && event.key === "m") || event.key === "M" || event.key === "ة" ) {
+        if (
+          (event.ctrlKey && event.key === "m") ||
+          event.key === "M" ||
+          event.key === "ة"
+        ) {
           dwn.click();
         }
       });
@@ -358,9 +820,60 @@
         }
       });
       if (window.location.href.endsWith(".html")) {
-    window.history.replaceState({}, document.title, window.location.href.replace(".html", ""));
-}
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.href.replace(".html", "")
+        );
+      }
 
+      // Animation Functions
+      function createSpeedLines() {
+        const speedLines = document.querySelector(".speed-lines");
+        for (let i = 0; i < 30; i++) {
+          const line = document.createElement("div");
+          line.className = "speed-line";
+          line.style.left = `${Math.random() * 100}%`;
+          line.style.top = `${Math.random() * 100}%`;
+          line.style.animationDelay = `${Math.random() * 0.8}s`;
+          line.style.height = `${20 + Math.random() * 30}px`;
+          speedLines.appendChild(line);
+        }
+      }
+
+      function showAnimation() {
+        const container = document.querySelector(".animation-container");
+        const truck = document.querySelector(".truck-animation");
+        const text = document.querySelector(".loading-text");
+
+        // تحديث أيقونة الشاحنة
+        truck.innerHTML =
+          '<i class="fas fa-truck-moving"></i><div class="speed-lines"></div>';
+        createSpeedLines();
+
+        container.classList.add("active");
+        setTimeout(() => {
+          truck.classList.add("active");
+          setTimeout(() => {
+            text.classList.add("active");
+          }, 300);
+        }, 100);
+      }
+
+      function hideAnimation() {
+        const container = document.querySelector(".animation-container");
+        const truck = document.querySelector(".truck-animation");
+        const text = document.querySelector(".loading-text");
+
+        text.classList.remove("active");
+        truck.classList.remove("active");
+        setTimeout(() => {
+          container.classList.remove("active");
+        }, 500);
+      }
+
+      // Initialize speed lines
+      createSpeedLines();
     </script>
   </body>
 </html>
