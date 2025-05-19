@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ج<!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
@@ -385,96 +385,6 @@
    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
-    <!-- انيميشن الانتقال للشاحنة -->
-    <div id="truck-transition" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; align-items:center; justify-content:center;">
-      <div id="truck-overlay" style="position:absolute;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);opacity:0;transition:opacity 0.4s;"></div>
-      <div id="map-anim-container" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width: 520px; height: 320px; max-width:90vw; max-height:60vh;">
-        <svg id="map-svg" viewBox="0 0 520 320" width="100%" height="100%" style="border-radius:22px; box-shadow:0 4px 32px rgba(25,118,210,0.18); background:#e3eafc;">
-          <!-- تركيا (تظليل أصفر) -->
-          <path d="M40,260 Q120,120 300,80 Q400,100 480,160 Q500,200 400,220 Q300,200 200,180 Q100,200 40,260 Z" fill="#fff9c4" stroke="#ffd54f" stroke-width="4" opacity="0.7"/>
-          <!-- العراق (تظليل أخضر) -->
-          <path d="M320,180 Q370,140 470,200 Q480,250 420,280 Q350,270 320,180 Z" fill="#aed581" stroke="#388e3c" stroke-width="4" opacity="0.7"/>
-          <!-- حدود تركيا -->
-          <path d="M40,260 Q120,120 300,80 Q400,100 480,160 Q500,200 400,220 Q300,200 200,180 Q100,200 40,260 Z" fill="none" stroke="#fbc02d" stroke-width="3" stroke-dasharray="8,6"/>
-          <!-- حدود العراق -->
-          <path d="M320,180 Q370,140 470,200 Q480,250 420,280 Q350,270 320,180 Z" fill="none" stroke="#388e3c" stroke-width="3" stroke-dasharray="8,6"/>
-          <!-- طريق أبيض -->
-          <path d="M60,260 Q180,60 460,120" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.7"/>
-          <!-- مسار الحركة -->
-          <path id="move-path" d="M60,260 Q180,60 460,120" stroke="#1976d2" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="10,10"/>
-          <!-- نقاط على المسار -->
-          <circle cx="60" cy="260" r="7" fill="#1976d2"/>
-          <circle cx="460" cy="120" r="7" fill="#1976d2"/>
-          <!-- مدن رئيسية -->
-          <circle cx="120" cy="120" r="10" fill="#ffd700" stroke="#fff" stroke-width="3"/>
-          <text x="120" y="115" font-size="18" font-family="Arial" fill="#333" text-anchor="middle">اسطنبول</text>
-          <circle cx="470" cy="200" r="10" fill="#ffd700" stroke="#fff" stroke-width="3"/>
-          <text x="470" y="195" font-size="18" font-family="Arial" fill="#333" text-anchor="middle">بغداد</text>
-        </svg>
-        <div id="marker-icon" style="position:absolute; left:0; top:0; width:38px; height:38px; transform:translate(-19px,-34px);">
-          <i class="fas fa-map-marker-alt" style="font-size:38px; color:#d32f2f; filter: drop-shadow(0 0 10px #fff);"></i>
-        </div>
-      </div>
-      <div id="truck-text" style="position:absolute; bottom:12%; left:50%; transform:translateX(-50%); color:#fff; font-size:2.1rem; font-weight:600; opacity:0; transition:opacity 0.5s; text-shadow:0 2px 12px #000; letter-spacing:1px; background:rgba(25,118,210,0.15); padding:12px 32px; border-radius:18px; box-shadow:0 2px 12px rgba(25,118,210,0.12);">
-        جاري الانتقال لخريطة تتبع شحنتك...
-      </div>
-      <audio id="truck-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12b6b6e1b2.mp3" preload="auto"></audio>
-    </div>
-    <script>
-    // حركة الأيقونة على المسار
-    function animateMarkerOnPath() {
-      const path = document.getElementById('move-path');
-      const marker = document.getElementById('marker-icon');
-      if (!path || !marker) return;
-      const pathLength = path.getTotalLength();
-      marker.style.opacity = 1;
-      let start = null;
-      function step(ts) {
-        if (!start) start = ts;
-        let progress = Math.min((ts - start) / 1800, 1); // 1.8 ثانية
-        const point = path.getPointAtLength(progress * pathLength);
-        marker.style.left = point.x + 'px';
-        marker.style.top = point.y + 'px';
-        if (progress < 1) {
-          requestAnimationFrame(step);
-        }
-      }
-      requestAnimationFrame(step);
-    }
-    // تعديل دالة goToOrderPage لتشغيل الأنيميشن الجديد
-    function goToOrderPage(e) {
-      if (e) e.preventDefault();
-      const anim = document.getElementById('truck-transition');
-      const overlay = document.getElementById('truck-overlay');
-      const text = document.getElementById('truck-text');
-      anim.style.display = 'flex';
-      overlay.style.opacity = '0';
-      text.style.opacity = '0';
-      setTimeout(() => {
-        overlay.style.opacity = '1';
-        // تشغيل صوت الشاحنة مع محاولة ذكية
-        const sound = document.getElementById('truck-sound');
-        if (sound) {
-          sound.currentTime = 0;
-          sound.muted = false;
-          sound.play().catch(() => {
-            const tryPlay = () => {
-              sound.play();
-              document.body.removeEventListener('click', tryPlay);
-            };
-            document.body.addEventListener('click', tryPlay);
-          });
-        }
-        // حركة الأيقونة
-        animateMarkerOnPath();
-        // إظهار النص مع Fade In
-        text.style.opacity = '1';
-        setTimeout(() => { text.style.opacity = '0'; }, 1700);
-      }, 10);
-      setTimeout(() => {
-        window.location.href = 'order.html';
-      }, 2000);
-    }
-    </script>
+
   </body>
 </html>
