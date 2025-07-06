@@ -43,6 +43,143 @@
         background: linear-gradient(120deg, #fff 0%, #f7f7fa 60%, #e0e0e0 100%);
       }
 
+      /* Login Container Styles */
+      .login-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+      }
+
+      .login-container.hidden {
+        display: none;
+      }
+
+      .login-box {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .login-logo {
+        margin-bottom: 2rem;
+      }
+
+      .login-logo img {
+        max-width: 120px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .login-title {
+        font-size: 1.8rem;
+        color: var(--text-color);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .login-subtitle {
+        color: #666;
+        margin-bottom: 2rem;
+        font-size: 1rem;
+      }
+
+      .login-input-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+
+      .login-input-group i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        font-size: 1.2rem;
+      }
+
+      .login-input {
+        width: 100%;
+        padding: 15px 50px 15px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .login-input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        background: white;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, var(--primary-color), #1976d2);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+      }
+
+      .login-btn:active {
+        transform: translateY(0);
+      }
+
+      .login-error {
+        color: var(--danger-color);
+        margin-top: 1rem;
+        padding: 10px;
+        border-radius: 8px;
+        background: rgba(244, 67, 54, 0.1);
+        display: none;
+        font-size: 0.9rem;
+      }
+
+      .login-error.show {
+        display: block;
+      }
+
+      /* Main Content Styles */
+      .main-content {
+        display: none;
+      }
+
+      .main-content.show {
+        display: block;
+      }
+
       .container {
         background-color: rgba(255, 255, 255, 0.95);
         padding: 2rem;
@@ -243,6 +380,40 @@
         font-size: 1.5rem;
       }
 
+      #logoutBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #ff9800;
+        color: white;
+        border: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      #logoutBtn:hover {
+        transform: scale(1.1);
+        background-color: #f57c00;
+      }
+
+      #logoutBtn i {
+        font-size: 1.5rem;
+      }
+
+      /* Hide logout button when login form is shown */
+      .login-container:not(.hidden) ~ #logoutBtn,
+      .login-container:not(.hidden) + .main-content #logoutBtn {
+        display: none !important;
+      }
+
       .error {
         color: var(--danger-color);
         text-align: center;
@@ -338,6 +509,10 @@
         .container,
         .container * {
           visibility: visible !important;
+        }
+        .login-container,
+        #logoutBtn {
+          display: none !important;
         }
         .container {
           position: absolute !important;
@@ -487,111 +662,140 @@
     </style>
   </head>
   <body>
-    <header class="page-header">
-      <div class="logo-box">
-        <img src="11zon_cropped-removebg-preview.png" alt="Meshwar Logo" />
-      </div>
-      <div class="company-name">Meshwar</div>
-    </header>
-    <div class="container">
-      <div class="container-logo">
-        <img
-          src="WhatsApp Image 2025-02-09 at 17.14.41_f56a6468.jpg"
-          alt="Meshwar Logo"
-        />
-      </div>
-      <div class="input-group no-print">
-        <i class="fas fa-barcode"></i>
-        <input type="text" id="barcode" placeholder="أدخل الباركود" />
-      </div>
-      <button id="searchBtn" onclick="search()" class="no-print">
-        <div class="button-content">
-          <i class="fas fa-search"></i>
-          <span>بحث</span>
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">
+      <div class="login-box">
+        <div class="login-logo">
+          <img src="11zon_cropped-removebg-preview.png" alt="Meshwar Logo" />
         </div>
-      </button>
-      <div id="result">
-        <div class="result-item">
+        <h2 class="login-title">تسجيل الدخول</h2>
+        <p class="login-subtitle">أدخل كلمة المرور للوصول إلى النظام</p>
+        <div class="login-input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            id="passwordInput"
+            class="login-input"
+            placeholder="كلمة المرور"
+            autocomplete="off"
+          />
+        </div>
+        <button class="login-btn" onclick="checkPassword()">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>دخول</span>
+        </button>
+        <div class="login-error" id="loginError">كلمة المرور غير صحيحة</div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <header class="page-header">
+        <div class="logo-box">
+          <img src="11zon_cropped-removebg-preview.png" alt="Meshwar Logo" />
+        </div>
+        <div class="company-name">Meshwar</div>
+      </header>
+      <div class="container">
+        <div class="container-logo">
+          <img
+            src="WhatsApp Image 2025-02-09 at 17.14.41_f56a6468.jpg"
+            alt="Meshwar Logo"
+          />
+        </div>
+        <div class="input-group no-print">
           <i class="fas fa-barcode"></i>
-          <strong>الباركود:</strong>
-          <span id="displayBarcode"></span>
+          <input type="text" id="barcode" placeholder="أدخل الباركود" />
         </div>
-        <div class="result-item">
-          <i class="fas fa-user"></i>
-          <strong>المرسل:</strong>
-          <span id="sender"></span>
+        <button id="searchBtn" onclick="search()" class="no-print">
+          <div class="button-content">
+            <i class="fas fa-search"></i>
+            <span>بحث</span>
+          </div>
+        </button>
+        <div id="result">
+          <div class="result-item">
+            <i class="fas fa-barcode"></i>
+            <strong>الباركود:</strong>
+            <span id="displayBarcode"></span>
+          </div>
+          <div class="result-item">
+            <i class="fas fa-user"></i>
+            <strong>المرسل:</strong>
+            <span id="sender"></span>
+          </div>
+          <div class="result-item">
+            <i class="fas fa-money-bill"></i>
+            <strong>أجور الشحن:</strong>
+            <input type="text" id="shippingFees" />
+          </div>
+          <div class="result-item">
+            <i class="fas fa-hashtag"></i>
+            <strong>كود الطلب:</strong>
+            <input type="text" id="orderCode" />
+          </div>
+          <div class="result-item">
+            <i class="fas fa-truck"></i>
+            <strong>حالة الطلب:</strong>
+            <span id="shippingStatus"></span>
+          </div>
+          <div class="result-item">
+            <i class="fas fa-box"></i>
+            <strong>الكمية:</strong>
+            <input type="text" id="quantity" />
+          </div>
+          <div class="result-item">
+            <i class="fas fa-user-check"></i>
+            <strong>المستلم:</strong>
+            <span id="receiver"></span>
+          </div>
+          <div class="result-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <strong>المحافظة:</strong>
+            <span id="province"></span>
+          </div>
+          <div class="result-item">
+            <i class="fas fa-info-circle"></i>
+            <strong>تفاصيل الطلبية:</strong>
+            <input type="text" id="orderDetails" />
+          </div>
+          <div class="result-item">
+            <i class="fas fa-sticky-note"></i>
+            <strong>ملاحظة:</strong>
+            <input type="text" id="notes" />
+          </div>
+          <div class="result-item">
+            <i class="fas fa-phone"></i>
+            <strong>التليفون:</strong>
+            <span id="phone"></span>
+          </div>
+          <div class="button-group">
+            <button id="printBtn" onclick="printData()" class="no-print">
+              <div class="button-content">
+                <i class="fas fa-print"></i>
+                <span>طباعة البيانات</span>
+              </div>
+            </button>
+            <button id="submitBtn" onclick="submitData()" class="no-print">
+              <div class="button-content">
+                <i class="fas fa-paper-plane"></i>
+                <span>إرسال</span>
+              </div>
+            </button>
+            <button
+              id="closeSheetBtn"
+              onclick="submitData(true)"
+              class="no-print"
+            >
+              <div class="button-content">
+                <i class="fas fa-check-double"></i>
+                <span>إرسال وإغلاق الكشف</span>
+              </div>
+            </button>
+          </div>
         </div>
-        <div class="result-item">
-          <i class="fas fa-money-bill"></i>
-          <strong>أجور الشحن:</strong>
-          <input type="text" id="shippingFees" />
-        </div>
-        <div class="result-item">
-          <i class="fas fa-hashtag"></i>
-          <strong>كود الطلب:</strong>
-          <input type="text" id="orderCode" />
-        </div>
-        <div class="result-item">
-          <i class="fas fa-truck"></i>
-          <strong>حالة الطلب:</strong>
-          <span id="shippingStatus"></span>
-        </div>
-        <div class="result-item">
-          <i class="fas fa-box"></i>
-          <strong>الكمية:</strong>
-          <input type="text" id="quantity" />
-        </div>
-        <div class="result-item">
-          <i class="fas fa-user-check"></i>
-          <strong>المستلم:</strong>
-          <span id="receiver"></span>
-        </div>
-        <div class="result-item">
-          <i class="fas fa-map-marker-alt"></i>
-          <strong>المحافظة:</strong>
-          <span id="province"></span>
-        </div>
-        <div class="result-item">
-          <i class="fas fa-info-circle"></i>
-          <strong>تفاصيل الطلبية:</strong>
-          <input type="text" id="orderDetails" />
-        </div>
-        <div class="result-item">
-          <i class="fas fa-sticky-note"></i>
-          <strong>ملاحظة:</strong>
-          <input type="text" id="notes" />
-        </div>
-        <div class="result-item">
-          <i class="fas fa-phone"></i>
-          <strong>التليفون:</strong>
-          <span id="phone"></span>
-        </div>
-        <div class="button-group">
-          <button id="printBtn" onclick="printData()" class="no-print">
-            <div class="button-content">
-              <i class="fas fa-print"></i>
-              <span>طباعة البيانات</span>
-            </div>
-          </button>
-          <button id="submitBtn" onclick="submitData()" class="no-print">
-            <div class="button-content">
-              <i class="fas fa-paper-plane"></i>
-              <span>إرسال</span>
-            </div>
-          </button>
-          <button
-            id="closeSheetBtn"
-            onclick="submitData(true)"
-            class="no-print"
-          >
-            <div class="button-content">
-              <i class="fas fa-check-double"></i>
-              <span>إرسال وإغلاق الكشف</span>
-            </div>
-          </button>
-        </div>
+        <div id="error" class="error"></div>
       </div>
-      <div id="error" class="error"></div>
     </div>
     <button
       id="homeBtn"
@@ -599,6 +803,9 @@
       title="العودة للصفحة الرئيسية"
     >
       <i class="fas fa-home"></i>
+    </button>
+    <button id="logoutBtn" onclick="logout()" title="تسجيل الخروج">
+      <i class="fas fa-sign-out-alt"></i>
     </button>
 
     <!-- Shipping themed SVG background -->
@@ -707,6 +914,98 @@
     </div>
 
     <script>
+      // Login Management
+      const CORRECT_PASSWORD = "12345oaso";
+      const LOGIN_STORAGE_KEY = "meshwar_login_status";
+
+      // Check login status immediately and on page load
+      function checkLoginStatus() {
+        const isLoggedIn = localStorage.getItem(LOGIN_STORAGE_KEY);
+        if (isLoggedIn === "true") {
+          showMainContent();
+        } else {
+          showLoginForm();
+        }
+      }
+
+      // Run immediately and also on DOMContentLoaded for safety
+      let loginChecked = false;
+
+      function checkLoginStatus() {
+        if (loginChecked) return;
+        loginChecked = true;
+
+        const isLoggedIn = localStorage.getItem(LOGIN_STORAGE_KEY);
+        if (isLoggedIn === "true") {
+          showMainContent();
+        } else {
+          showLoginForm();
+        }
+      }
+
+      // Run immediately
+      checkLoginStatus();
+
+      // Also run on DOMContentLoaded as backup
+      document.addEventListener("DOMContentLoaded", function () {
+        if (!loginChecked) {
+          checkLoginStatus();
+        }
+      });
+
+      function checkPassword() {
+        const password = document.getElementById("passwordInput").value;
+        const errorDiv = document.getElementById("loginError");
+
+        if (password === CORRECT_PASSWORD) {
+          // Store login status in localStorage
+          localStorage.setItem(LOGIN_STORAGE_KEY, "true");
+          showMainContent();
+          errorDiv.classList.remove("show");
+          // Clear password input for security
+          document.getElementById("passwordInput").value = "";
+        } else {
+          errorDiv.classList.add("show");
+          document.getElementById("passwordInput").value = "";
+          document.getElementById("passwordInput").focus();
+        }
+      }
+
+      function showMainContent() {
+        document.getElementById("loginContainer").classList.add("hidden");
+        document.getElementById("mainContent").classList.add("show");
+      }
+
+      function showLoginForm() {
+        document.getElementById("loginContainer").classList.remove("hidden");
+        document.getElementById("mainContent").classList.remove("show");
+      }
+
+      // Add Enter key support for password input
+      document.addEventListener("DOMContentLoaded", function () {
+        const passwordInput = document.getElementById("passwordInput");
+        if (passwordInput) {
+          passwordInput.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+              checkPassword();
+            }
+          });
+        }
+      });
+
+      function logout() {
+        // Clear login status from localStorage
+        localStorage.removeItem(LOGIN_STORAGE_KEY);
+        // Reset login check flag
+        loginChecked = false;
+        // Show login form again
+        showLoginForm();
+        // Clear password input
+        document.getElementById("passwordInput").value = "";
+        // Hide error message
+        document.getElementById("loginError").classList.remove("show");
+      }
+
       const SEARCH_WEB_APP_URL =
         "https://script.google.com/macros/s/AKfycbzea8d35EBbAuj7AN3QOfifGC4n1A5sts-e9oCJHt4OHfxk7kP2idpArrKrkobBndmX/exec";
       const SUBMIT_WEB_APP_URL =
