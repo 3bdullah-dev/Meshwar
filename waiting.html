@@ -54,6 +54,7 @@
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 3.5rem;
       }
       .container-logo {
         width: 100%;
@@ -304,6 +305,9 @@
           min-width: 0 !important;
           max-width: 100% !important;
           margin: 0 auto !important;
+          padding-top: 4.2rem !important;
+          position: relative;
+          border-radius: 32px 32px 8px 8px !important;
         }
         tr,
         td {
@@ -311,8 +315,11 @@
           width: 100% !important;
           max-width: 100% !important;
           min-width: 0 !important;
-          overflow-x: hidden;
           margin: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
           padding-left: 0 !important;
         }
         thead {
@@ -326,11 +333,35 @@
           padding: 0.5rem 0.2rem;
           position: relative;
         }
+        tr:first-child {
+          margin-top: 2.7rem;
+        }
+        .table-responsive {
+          width: 100%;
+          overflow-x: auto;
+          overflow: visible;
+        }
+        tr::before {
+          content: attr(data-order);
+          position: absolute;
+          top: -20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #2196f3;
+          color: white;
+          padding: 8px 20px;
+          border-radius: 25px;
+          font-size: 1.3rem;
+          font-weight: bold;
+          z-index: 9999;
+          box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+          white-space: nowrap;
+        }
         tr:not(:last-child)::after {
           content: "";
           display: block;
           height: 0;
-          border-bottom: 4px solid #2196f3;
+          border-bottom: 12px solid #2196f3;
           margin: 1.1rem 0 0 0;
           width: 100%;
         }
@@ -378,11 +409,31 @@
           padding-left: 14px;
         }
         td:last-child {
-          border-bottom: none;
+          /* border-bottom: none; */
         }
         td:before,
         .mobile-value {
           font-size: 1.22em;
+        }
+        .mobile-value.value-waiting {
+          background: #f44336;
+          color: #fff;
+          border-radius: 1.2em;
+          padding: 0.25em 1.1em;
+          font-weight: bold;
+          margin-right: 0.2em;
+          margin-left: 0.2em;
+          display: inline-block;
+        }
+        .mobile-value.value-out {
+          background: #fffde7;
+          color: #bfa100;
+          border-radius: 1.2em;
+          padding: 0.25em 1.1em;
+          font-weight: bold;
+          margin-right: 0.2em;
+          margin-left: 0.2em;
+          display: inline-block;
         }
       }
       /* خلفية SVG زخرفية */
@@ -449,6 +500,44 @@
           margin: 0 auto 18px auto;
         }
       }
+      @media (min-width: 901px) {
+        .container-logo img {
+          max-width: 90%;
+          width: 90%;
+          min-width: 340px;
+          max-height: 260px;
+          display: block;
+          margin: 0 auto 32px auto;
+        }
+        .table-responsive {
+          width: 100%;
+          max-width: 100%;
+          margin: 0 auto;
+          display: block;
+          box-sizing: border-box;
+        }
+        table {
+          width: 100%;
+          max-width: 100%;
+          margin: 0 auto;
+          box-sizing: border-box;
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+        .container {
+          overflow-x: auto;
+        }
+      }
+      .cell-out {
+        background: #fffde7 !important;
+        color: #bfa100 !important;
+        font-weight: bold;
+      }
+      .cell-waiting {
+        background: #f44336 !important;
+        color: #fff !important;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -465,7 +554,7 @@
           alt="Meshwar Logo"
         />
       </div>
-      <h2>ابحث بالباركود</h2>
+      <h2>ابحث بالباركود عن طلبيات انتظار</h2>
       <div class="input-group">
         <i class="fas fa-barcode"></i>
         <input type="text" id="barcodeInput" placeholder="اكتب رقم الباركود" />
@@ -637,10 +726,58 @@
             const keys = Object.keys(data[0]);
             keys.forEach((key) => (table += "<th>" + key + "</th>"));
             table += "</tr></thead><tbody>";
-            data.forEach((row) => {
-              table += "<tr>";
+            data.forEach((row, index) => {
+              const orderNumber = index + 1;
+              const orderText =
+                orderNumber === 1
+                  ? "الطلب الأول"
+                  : orderNumber === 2
+                  ? "الطلب الثاني"
+                  : orderNumber === 3
+                  ? "الطلب الثالث"
+                  : orderNumber === 4
+                  ? "الطلب الرابع"
+                  : orderNumber === 5
+                  ? "الطلب الخامس"
+                  : orderNumber === 6
+                  ? "الطلب السادس"
+                  : orderNumber === 7
+                  ? "الطلب السابع"
+                  : orderNumber === 8
+                  ? "الطلب الثامن"
+                  : orderNumber === 9
+                  ? "الطلب التاسع"
+                  : orderNumber === 10
+                  ? "الطلب العاشر"
+                  : `الطلب رقم ${orderNumber}`;
+
+              table += `<tr data-order="${orderText}">`;
               keys.forEach((key) => {
-                table += `<td data-label='${key}'><span class='mobile-separator'></span><span class='mobile-value'>${row[key]}</span></td>`;
+                let value = row[key];
+                let tdClass = "";
+                let valueClass = "";
+                const normalizedKey = key.replace(/\s/g, "").toLowerCase();
+                if (
+                  normalizedKey.includes("حالة") ||
+                  normalizedKey.includes("status")
+                ) {
+                  if (typeof value === "string") {
+                    const normalizedValue = value
+                      .replace(/\s/g, "")
+                      .toLowerCase();
+                    if (normalizedValue === "out") {
+                      tdClass = "cell-out";
+                      valueClass = "value-out";
+                    } else if (
+                      normalizedValue.includes("انتظار") ||
+                      normalizedValue === "waiting"
+                    ) {
+                      tdClass = "cell-waiting";
+                      valueClass = "value-waiting";
+                    }
+                  }
+                }
+                table += `<td data-label='${key}' class='${tdClass}'><span class='mobile-separator'></span><span class='mobile-value ${valueClass}'>${value}</span></td>`;
               });
               table += "</tr>";
             });
